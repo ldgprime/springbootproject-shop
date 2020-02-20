@@ -1,9 +1,9 @@
 package com.cos.shop.model.comment;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,4 +18,19 @@ public class Comment {
 	private int userId;
 	private int productId;
 	private Date createDate;
+	
+	@Builder
+	public Comment(String title, String content, int boardId, int userId, int productId) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.boardId = boardId;
+		this.userId = userId;
+		this.productId = productId;
+	}
+	
+	
+	
+	
+	
 }

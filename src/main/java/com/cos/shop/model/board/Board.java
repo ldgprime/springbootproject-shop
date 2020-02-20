@@ -1,9 +1,9 @@
 package com.cos.shop.model.board;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +17,17 @@ public class Board {
 	private int userId;
 	private int productId;
 	private Date createDate;
+	
+	@Builder
+	public Board(String title, String content, int userId, int productId) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.userId = userId;
+		this.productId = productId;
+	}
+	
+	
+	
+	
 }

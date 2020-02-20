@@ -25,21 +25,21 @@
 			<span style="display: inline-block; width: 700px; height: 700px;">
 				<img
 					class="img"
-					src="/images/product-single-1.jpg"
+					src="/images/${product.imageOne }.jpg"
 					alt=""
 					style="display: inline-block; width: 700px; height: 700px;"
 				/>
 			</span>
 			<div style="display: inline-block; ">
-				<table class="table table-hover" style="display: inline-block; margin-bottom: 40px;">
+				<table class="table table-hover" style="display: inline-block; margin-bottom: 75px;">
 					<tbody>
 						<tr>
 							<td>상품명</td>
-							<td>마우스</td>
+							<td>${product.productName }</td>
 						</tr>
 						<tr>
 							<td>판매가</td>
-							<td>15000원</td>
+							<td>${product.productPrice }</td>
 						</tr>
 						<tr>
 							<td>마일리지 적립</td>
@@ -47,28 +47,24 @@
 						</tr>
 						<tr>
 							<td>수량</td>
-							<td><input type="number" value="1" /></td>
+							<td><input id="count" type="number" value="1" /></td>
 						</tr>
 						<tr>
 							<td>배송비</td>
 							<td>2500원</td>
-						</tr>
-						<tr>
-							<td>총액</td>
-							<td>17500원</td>
-						</tr>
+						</tr>					
 						<tr>
 							<td class="text-center">
-								<a href="#" class="icon"><i class="icon-thumbs-up"></i></a>
+								<a href="#" class="icon"><i class="icon-thumbs-up"></i><span>&nbsp;&nbsp;${product.niceCount }</span></a>
 							</td>
 							<td class="text-center">
-								<a href="#" class="icon"><i class="icon-thumbs-down"></i></a>
+								<a href="#" class="icon"><i class="icon-thumbs-down"></i><span>&nbsp;&nbsp;${product.hateCount }</span></a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 				<div class="text-center" style="display: block;">
-					<button class="btn btn-warning">장바구니 추가</button>					
+					<button id="addCart" class="btn btn-warning" value="${product.id }">장바구니 추가</button>					
 				</div>
 			</div>		
 		</div>
@@ -97,7 +93,7 @@
 						<!-- Tabs -->
 						<section id="detail">
 						<div class="container">
-							<img class="img-responsive center-block" src="/images/g102.jpg" />
+							<img class="img-responsive center-block" src="/images/${product.imageTwo }.jpg" />
 						</div>
 						</section>
 						
@@ -192,7 +188,17 @@
 						</section>
 						<!-- board section -->
 		
-			<script>
+		
+		
+		
+		
+	<script>
+
+
+		
+	
+
+	
 		$('#review').on('click',function(){
 			let str = "";
 			str += "<div class='form-group'>";			
@@ -212,6 +218,28 @@
 
 
 
+		$('#addCart').on('click',function(){	
+
+			let productId = $('#addCart').val();
+			let productCount = $('#count').val();			
+
+			let date = new Date();
+			 
+			date.setDate(date.getDate() + 7);
+			 
+			let willCookie = "";
+			    willCookie += ""+productId+"="+productCount+";";
+			    willCookie += "expires=" + date.toUTCString()+";";
+			    willCookie += "path=/";
+			    
+			 // 쿠키에 넣는다.
+			document.cookie = willCookie;		
+			alert('장바구니에 추가되었습니다!')					
+
+		});
+
+
+			
 
 	</script>
 

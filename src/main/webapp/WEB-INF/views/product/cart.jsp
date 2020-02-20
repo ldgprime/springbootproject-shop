@@ -27,45 +27,78 @@
 					<th>상품</th>
 					<th>상품이름</th>
 					<th>수량</th>
-					<th>상품금액</th>
-					<th>할인금액</th>
-					<th>배송비</th>
+					<th>상품금액</th>	
 					<th>삭제</th>
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach var="respAddCart" items="${respAddCarts }">			
 				<tr >
 					<td style="width: 60px; height: 30;">
-						<img
-							src="/images/product-1.jpg"
+						<img							          	
+							src="/images/${respAddCart.imageOne }.jpg"
 							style="width: 60px; height: 30px;"
 						/>
 					</td>
-					<td>마우스</td>
-					<td><input type="number" value="1" max="100" /></td>
-					<td>15000원</td>
-					<td>100원</td>
-					<td>2500원</td>
-
-					<td><a href="/" class="btn btn-danger">삭제</a></td>
+					<td>${respAddCart.productName }</td>
+					<td><input type="number" value="${respAddCart.count }" max="100" /></td>
+					<td>${respAddCart.productPrice }원</td>
+					<td><button onclick="deleteLine(${respAddCart.id },${respAddCart.count },this)" class="btn btn-danger">삭제</button></td>
 				</tr>
+				</c:forEach>
 				<tr>
-					<td colspan="6" class="text-right">
+					<td colspan="4" class="text-right">
 						<p>
-							상품금액 <span>15000</span> 원 - 할인금액 <span>100</span> 원 +
+							상품금액 <span>15000</span> 원 +
 							배송비 <span>2500</span> 원 = 주문합계 <strong>17500</strong> 원
 						</p>
 					</td>
 					<td><a href="/" class="btn btn-primary">결제</a></td>
 				</tr>
+			
 			</tbody>
 		</table>
 	</div>
 
 	<br/><br/><br/>
 		
+	<script>
+	
+
+	
+    var cookieRemove = function(id,count) {
+
+        // 변수를 선언한다.
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+		
+        var willCookie = "";
+        willCookie += ""+id+"="+count+";";
+        willCookie += "Expires=" + date.toUTCString()+";";
+        willCookie += "path=/";       
+
+        // 쿠키를 집어넣는다.
+        document.cookie = willCookie;
+
+        // 출력한다.
+        alert('장바구니에 삭제되었습니다!');
+    }
+    
+	
+	function deleteLine(id,count,obj) {
+
+		cookieRemove(id,count)	
+		
+	    let tr = $(obj).parent().parent();	 
+	    //라인 삭제
+	    tr.remove();	    
+	}
 
 
+
+
+	</script>
+	
 
 
 

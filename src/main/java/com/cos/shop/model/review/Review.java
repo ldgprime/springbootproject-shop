@@ -1,9 +1,9 @@
 package com.cos.shop.model.review;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +17,17 @@ public class Review {
 	private int userId;
 	private int productId;
 	private Date createDate;
+	
+	
+	@Builder
+	public Review(String title, String content, int userId, int productId) {
+
+		this.title = title;
+		this.content = content;
+		this.userId = userId;
+		this.productId = productId;
+	}
+	
+	
+	
 }

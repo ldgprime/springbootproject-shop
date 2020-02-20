@@ -1,9 +1,9 @@
 package com.cos.shop.model.bill;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,4 +18,18 @@ public class Bill {
 	private int productId;
 	private int paymentId;
 	private Date createDate;
+	
+	@Builder
+	public Bill(int subCount, int subPrice, int userId, int productId, int paymentId) {
+		
+		this.subCount = subCount;
+		this.subPrice = subPrice;
+		this.userId = userId;
+		this.productId = productId;
+		this.paymentId = paymentId;
+	}
+	
+	
+	
+	
 }

@@ -1,4 +1,4 @@
-package com.cos.shop.model.product;
+package com.cos.shop.model.product.dto;
 
 import java.sql.Date;
 
@@ -7,30 +7,31 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 @Data
-@NoArgsConstructor(force=true)
 @AllArgsConstructor
-public class Product {
+@NoArgsConstructor
+public class RespAddCart {
+
 	private int id;
 	private String productName;
-	private int productPrice;
-	//추가
+	private int productPrice;		
 	private String imageOne;
-	//추가
-	//추가
-	private String imageTwo;
-	//추가
+	private String imageTwo;	
 	private int niceCount;
 	private int hateCount;
-	//추가
+	private int Count;	
 	private Date createDate;
-	//추가
 	
 	@Builder
-	public Product(String productName, int productPrice, int niceCount, int hateCount) {
-		super();
+	public RespAddCart(String productName, int productPrice, String imageOne, String imageTwo, int niceCount,
+			int hateCount) {
+	
 		this.productName = productName;
 		this.productPrice = productPrice;
+		this.imageOne = imageOne;
+		this.imageTwo = imageTwo;
 		this.niceCount = niceCount;
 		this.hateCount = hateCount;
 	}
@@ -40,4 +41,3 @@ public class Product {
 	
 	
 }
-
