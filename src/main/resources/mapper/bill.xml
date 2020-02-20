@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cos.shop.repository.BillRepository">
+
+  <select id="findAll" resultType="com.cos.shop.model.bill.Bill">
+    select * from bill order by id desc
+  </select>
+  
+  <select id="findById" resultType="com.cos.shop.model.bill.Bill">
+    select * from bill where id = #{id}
+  </select> 
+  
+  <insert id="save">
+  	insert into bill(subCount, subPrice, createDate)
+  	values(#{subCount}, #{subPrice}, now())
+  </insert>
+  
+  <update id="update">
+  	update bill set subCount=#{subCount}, subPrice=#{subPrice}
+	where id = #{id}
+  </update>
+  
+  <delete id="delete">
+  	delete from bill where id = #{id}
+  </delete>
+  
+</mapper>

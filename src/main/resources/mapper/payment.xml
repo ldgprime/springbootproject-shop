@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cos.shop.repository.PaymentRepository">
+
+  <select id="findByProductId" resultType="com.cos.shop.model.payment.Payment">
+    select * from board order by productId desc
+  </select>
+  
+  <select id="findById" resultType="com.cos.shop.model.payment.Payment">
+    select * from board where id = #{id}
+  </select> 
+  
+  <insert id="save">
+  	insert into board(title, content, createDate)
+  	values(#{title}, #{content}, now())
+  </insert>
+  
+  <update id="update">
+  	update board set title=#{title}, content=#{content}
+	where id = #{id}
+  </update>
+  
+  <delete id="delete">
+  	delete from board where id = #{id}
+  </delete>
+  
+</mapper>

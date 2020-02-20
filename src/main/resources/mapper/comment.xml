@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cos.shop.repository.CommentRepository">
+
+  <select id="findByBoardId" resultType="com.cos.shop.model.comment.Comment">
+    select * from comment order by id desc
+  </select>
+  
+  <select id="findById" resultType="com.cos.shop.model.comment.Comment">
+    select * from comment where id = #{id}
+  </select> 
+  
+  <insert id="save">
+  	insert into comment(title, content, createDate)
+  	values(#{title}, #{content}, now())
+  </insert>
+  
+  <update id="update">
+  	update comment set title=#{title}, content=#{content}
+	where id = #{id}
+  </update>
+  
+  <delete id="delete">
+  	delete from comment where id = #{id}
+  </delete>
+  
+</mapper>
