@@ -4,26 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cos.shop.repository.PaymentRepository">
 
-  <select id="findByProductId" resultType="com.cos.shop.model.payment.Payment">
-    select * from board order by productId desc
-  </select>
+
   
-  <select id="findById" resultType="com.cos.shop.model.payment.Payment">
-    select * from board where id = #{id}
-  </select> 
-  
-  <insert id="save">
-  	insert into board(title, content, createDate)
-  	values(#{title}, #{content}, now())
+  <insert id="payment" useGeneratedKeys="true" keyProperty="id" parameterType="com.cos.shop.model.payment.Payment">   	
+  	insert into payment(totalCount, totalPrice, userId)
+  	values(#{totalCount}, #{totalPrice}, #{userId})
   </insert>
   
-  <update id="update">
-  	update board set title=#{title}, content=#{content}
-	where id = #{id}
-  </update>
-  
-  <delete id="delete">
-  	delete from board where id = #{id}
-  </delete>
+
   
 </mapper>

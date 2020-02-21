@@ -15,8 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.shop.model.RespCM;
+import com.cos.shop.model.bill.dto.FindAllUserIdBillDto;
 import com.cos.shop.model.product.Product;
 import com.cos.shop.model.product.dto.RespAddCart;
 import com.cos.shop.service.ProductService;
@@ -35,7 +38,7 @@ public class ProductController {
 
 	@GetMapping("/product/bill")
 	public String bill() {
-		return "/product/bill";
+		return "product/bill";
 	}
 	@GetMapping("/product/cart")
 	public String cart(HttpServletRequest req, HttpServletResponse resp, Model model) {		
@@ -44,16 +47,13 @@ public class ProductController {
 		List<RespAddCart> respAddCarts = new ArrayList<RespAddCart>();
 		
 		for(int i = 0; i<cookies.length; i++ ) {
-			
-			System.out.println("Name = " + cookies[i].getName());
-			System.out.println("value = " + cookies[i].getValue());
-			List<Product> searchProducts =  pservice.findAll();
+	
+			List<Product> searchProducts =  pservice.findAllProduct();
 			
 			for(int j = 0; j<searchProducts.size(); j++) {
 				if(cookies[i].getName().equals(searchProducts.get(j).getId()+"")) {
-					RespAddCart respAddCart = pservice.findByIdAddCart(searchProducts.get(j).getId());
-					respAddCart.setCount(Integer.parseInt(cookies[i].getValue()));
-					System.out.println(respAddCart.getImageOne());
+					RespAddCart respAddCart = pservice.findByIdAddCartProduct(searchProducts.get(j).getId());
+					respAddCart.setCount(Integer.parseInt(cookies[i].getValue()));				
 					respAddCarts.add(respAddCart);
 				}
 				
@@ -64,40 +64,37 @@ public class ProductController {
 		model.addAttribute("respAddCarts", respAddCarts);		
 		
 		
-		return "/product/cart";
+		return "product/cart";
 	}
 	
 	@GetMapping("/product/product")
 	public String product(Model model) {
 		
-		List<Product> products = pservice.findAll();
+		List<Product> products = pservice.findAllProduct();
 		
 		model.addAttribute("products", products);		
 		
-		return "/product/product";
+		return "product/product";
 		
 	}
 	
 	@GetMapping("/product/productdetail/{productId}")
 	public String productDetail(@PathVariable int productId, Model model) {
 		
-		Product product = pservice.findById(productId);
+		Product product = pservice.findByIdProduct(productId);
 		
-		model.addAttribute("product", product);
+		model.addAttribute("product", product);		
 		
-		
-		return "/product/productdetail";
+		return "product/productdetail";
 	}
 	
 	@GetMapping("/product/productdetail//api/{productId}/{productCount}")
 	public ResponseEntity<?> addCart(@PathVariable int productId, @PathVariable int productCount, HttpServletResponse resp ){
 		
-		System.out.println(productId);
-		System.out.println(productCount);
+	
 		
 		Cookie cookie = new Cookie(productId+"",productCount+"");
-		
-		System.out.println(cookie);
+	
 		cookie.setMaxAge(60*60*24*7);		
 		resp.addCookie(cookie);
 		
@@ -105,8 +102,36 @@ public class ProductController {
 		return new ResponseEntity<RespCM> (new RespCM(200,"ok"),HttpStatus.OK);
 	}
 
+	@PostMapping("/product/billProc")
+	public String billProc(@RequestParam ("id") int [] id, @RequestParam ("count") int[] count,HttpServletRequest request,HttpServletResponse response,Model model) {
 
-
+		int userId = 1;
+		
+		pservice.payment(id,count);		
+		
+		Cookie[] cookies = request.getCookies();
+		
+		if(cookies != null){
+			
+			for(int i=0; i < cookies.length; i++){		
+				for(int j=0; j<id.length; j++) {
+					if(cookies[i].getName().equals(id[j]+"")) {
+						cookies[i].setMaxAge(0);
+						//JS 에서 패스설정 "/"을 해주었기 때문에 다시 패스설정을 해주어야하는 듯....
+						cookies[i].setPath("/");
+						response.addCookie(cookies[i]);
+					}
+				}
+			}	
+		}
+		
+		List<FindAllUserIdBillDto> bills = pservice.findAllUserIdBill(userId);
+		model.addAttribute("bills", bills);
+		
+		
+		return "product/bill";
+		
+	}
 
 
 

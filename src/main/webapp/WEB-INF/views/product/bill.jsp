@@ -23,36 +23,38 @@
 	<div class="container" style="margin-top: 650px;">
 		<table class="table table-hover">
 			<thead>
-				<tr >
+				<tr>
 					<th>상품</th>
 					<th>상품이름</th>
-					<th>수량</th>
-					<th>상품금액</th>
-					<th>할인금액</th>
-					<th>배송비</th>
+					<th>상품금액</th>	
+					<th>수량</th>						
+					<th>상품합계금액</th>
+					<th>주문일자</th>			
 					<th>구매내역삭제</th>
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach var="bill" items="${bills }">
 				<tr >
 					<td style="width: 60px; height: 30;">
 						<img
-							src="/images/product-1.jpg"
+							src="/images/${bill.imageOne }.jpg"
 							style="width: 60px; height: 30px;"
 						/>
 					</td>
-					<td>마우스</td>
-					<td><input type="number" value="1" max="100" /></td>
-					<td>15000원</td>
-					<td>100원</td>
-					<td>2500원</td>
-
+					<td>${bill.productName }</td>
+					<td>${bill.productPrice } 원</td>
+					<td><input type="number" value="${bill.subCount  }" max="100" min="0" readonly="readonly"  /></td>					
+					<td>${bill.subPrice } 원</td>
+					<td>${bill.createDate }</td>
 					<td><a href="/" class="btn btn-danger">삭제</a></td>
 				</tr>
+			</c:forEach>	
 				<tr>
-					<td colspan="7" class="text-right">
+					<td colspan="6" class="text-right">
 						<p>
-							 주문합계 <strong>17500</strong> 원
+							총수량 <span>10</span> 개 &nbsp;
+							총금액 <strong>17500</strong> 원
 						</p>
 					</td>	
 				</tr>

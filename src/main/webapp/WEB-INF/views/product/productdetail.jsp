@@ -2,22 +2,22 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/nav.jsp"%>
 
-<section>	
-	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url(/images/img_bg_2.jpg);">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t">
-						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>상품상세보기</h1>					
+	<section>	
+		<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url(/images/img_bg_2.jpg);">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center">
+						<div class="display-t">
+							<div class="display-tc animate-box" data-animate-effect="fadeIn">
+								<h1>상품상세보기</h1>			
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</header>
-</section>	
+		</header>
+	</section>	
 
 	<!-- info Content -->
 	<section id="info">	
@@ -31,7 +31,7 @@
 				/>
 			</span>
 			<div style="display: inline-block; ">
-				<table class="table table-hover" style="display: inline-block; margin-bottom: 75px;">
+				<table class="table table-hover" style="display: inline-block; margin-bottom: 30px;">
 					<tbody>
 						<tr>
 							<td>상품명</td>
@@ -64,7 +64,8 @@
 					</tbody>
 				</table>
 				<div class="text-center" style="display: block;">
-					<button id="addCart" class="btn btn-warning" value="${product.id }">장바구니 추가</button>					
+					<button id="addCart" class="btn btn-warning" value="${product.id }">장바구니 추가</button><br/>
+					<a href="/product/product" class="btn btn-primary">상품페이지로</a>						
 				</div>
 			</div>		
 		</div>
@@ -193,11 +194,6 @@
 		
 		
 	<script>
-
-
-		
-	
-
 	
 		$('#review').on('click',function(){
 			let str = "";
@@ -215,9 +211,7 @@
 			$('#reviewbox').prepend(str);	
 
 		});
-
-
-
+		
 		$('#addCart').on('click',function(){	
 
 			let productId = $('#addCart').val();
@@ -236,10 +230,7 @@
 			document.cookie = willCookie;		
 			alert('장바구니에 추가되었습니다!')					
 
-		});
-
-
-			
+		});		
 
 	</script>
 

@@ -8,16 +8,16 @@ public class BoardController {
 
 	@GetMapping("/board/boardWrite")
 	public String boardWrite() {
-		return "/board/boardwrite";
+		return "board/boardwrite";
 	}
 	@GetMapping("/board/boardupdate")
 	public String boardupdate() {
-		return "/board/boardupdate";
+		return "board/boardupdate";
 	}
 
 	@GetMapping("/board/boarddetail")
 	public String boardDetail() {
-		return "/board/boarddetail";
+		return "board/boarddetail";
 	}
 
 }
