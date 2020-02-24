@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.shop.model.RespCM;
 import com.cos.shop.model.bill.dto.FindAllUserIdBillDto;
+import com.cos.shop.model.payment.Payment;
 import com.cos.shop.model.product.Product;
 import com.cos.shop.model.product.dto.RespAddCart;
 import com.cos.shop.service.ProductService;
@@ -37,9 +38,19 @@ public class ProductController {
 	}
 
 	@GetMapping("/product/bill")
-	public String bill() {
+	public String bill(Model model) {
+		int userId = 1;
+		
+		List<FindAllUserIdBillDto> bills = pservice.findAllUserIdBill(userId);
+		model.addAttribute("bills", bills);
+		List<Payment> payments = pservice.FindAllUserIdPayment(userId);
+		model.addAttribute("payments", payments);
+		
 		return "product/bill";
 	}
+	
+	
+	
 	@GetMapping("/product/cart")
 	public String cart(HttpServletRequest req, HttpServletResponse resp, Model model) {		
 		
@@ -102,7 +113,7 @@ public class ProductController {
 		return new ResponseEntity<RespCM> (new RespCM(200,"ok"),HttpStatus.OK);
 	}
 
-	@PostMapping("/product/billProc")
+	@PostMapping("/product/cartProc")
 	public String billProc(@RequestParam ("id") int [] id, @RequestParam ("count") int[] count,HttpServletRequest request,HttpServletResponse response,Model model) {
 
 		int userId = 1;
@@ -127,6 +138,8 @@ public class ProductController {
 		
 		List<FindAllUserIdBillDto> bills = pservice.findAllUserIdBill(userId);
 		model.addAttribute("bills", bills);
+		List<Payment> payments = pservice.FindAllUserIdPayment(userId);
+		model.addAttribute("payments", payments);
 		
 		
 		return "product/bill";

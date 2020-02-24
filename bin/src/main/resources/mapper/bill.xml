@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cos.shop.repository.BillRepository">
+
+	<select id="findAllUserIdBill" resultType="com.cos.shop.model.bill.dto.FindAllUserIdBillDto">
+		select p.imageOne, p.productName, p.productPrice, b.subCount, b.subPrice, b.createDate
+		from bill b
+		inner join product p on b.productId = p.id	
+		where b.userId = 1
+	</select>
+
+	<insert id="bill">
+		insert into bill (subCount, subPrice, userId, productId, paymentId)
+		values(#{subCount},#{subPrice},#{userId},#{productId},#{paymentId})
+	</insert>
+  
+</mapper>

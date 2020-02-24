@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Payment {
 	private int id;
 	private int totalCount;
-	private int totalprice;
+	private int totalPrice;
 	//추가
 	private int shipingFee;
 	//추가

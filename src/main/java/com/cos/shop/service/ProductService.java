@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.shop.model.bill.dto.BillDto;
 import com.cos.shop.model.bill.dto.FindAllUserIdBillDto;
+import com.cos.shop.model.payment.Payment;
 import com.cos.shop.model.payment.dto.PaymentDto;
 import com.cos.shop.model.product.Product;
 import com.cos.shop.model.product.dto.RespAddCart;
@@ -74,12 +75,8 @@ public class ProductService {
 			totalPrice += subPrice;
 			totalCount += count[i]; 
 			subPriceSum.add(subPrice);
-		}
-		
-		for(int i = 0; i<subPriceSum.size(); i++) {
-			System.out.println(subPriceSum.get(i));
-		}
-		
+		}		
+	
 		PaymentDto pDto = new PaymentDto().builder()
 				.totalCount(totalCount)
 				.totalPrice(totalPrice)
@@ -108,7 +105,16 @@ public class ProductService {
 		
 		List<FindAllUserIdBillDto> bills = bRepository.findAllUserIdBill(userId);	
 		
+		
 		return bills;
+	}
+
+public List<Payment> FindAllUserIdPayment(int userId){
+		
+		
+		List<Payment> payments = payRepository.FindAllUserIdPayment(userId);
+		
+		return payments;
 	}
 	
 	

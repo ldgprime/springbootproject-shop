@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cos.shop.repository.PaymentRepository">
+
+
+  
+  <insert id="payment" useGeneratedKeys="true" keyProperty="id" parameterType="com.cos.shop.model.payment.Payment">   	
+  	insert into payment(totalCount, totalPrice, userId)
+  	values(#{totalCount}, #{totalPrice}, #{userId})
+  </insert>
+  
+
+  
+</mapper>

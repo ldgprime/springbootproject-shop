@@ -18,6 +18,7 @@ public class FindAllUserIdBillDto {
 	private String imageOne;
 	private String productName;
 	private int productPrice;
+	private int paymentId;
 	private int subCount;
 	private int subPrice;
 	private Date createDate;
