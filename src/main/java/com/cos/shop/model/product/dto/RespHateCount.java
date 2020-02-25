@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RespNiceCount {
+public class RespHateCount {
 	
 	private RespCM respCM;
-	private int niceCount;
+	private int hateCount;
 }

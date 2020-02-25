@@ -1,6 +1,4 @@
-package com.cos.shop.model.product.dto;
-
-import com.cos.shop.model.RespCM;
+package com.cos.shop.model.hate.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RespNiceCount {
+public class ReqHateDto {
 	
-	private RespCM respCM;
-	private int niceCount;
+	private int userId;
+	private int productId;
 }

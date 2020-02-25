@@ -9,6 +9,13 @@
   	values(#{userId}, #{productId})
   </insert>
   
+  <delete id="niceMinus">
+  	delete from nice where userId = #{userId} and productId = #{productId}   	
+  </delete>
+  
+  <select id="findByUserIdProductId" resultType="int">
+  	select count(*) from nice where userId = #{userId} and productId = #{productId}
+  </select>
 
   
 </mapper>

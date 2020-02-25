@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.shop.model.RespCM;
 import com.cos.shop.model.bill.dto.FindAllUserIdBillDto;
+import com.cos.shop.model.nice.dto.RespNiceProductIdDto;
 import com.cos.shop.model.payment.Payment;
 import com.cos.shop.model.product.Product;
 import com.cos.shop.model.product.dto.RespAddCart;
+import com.cos.shop.service.HateService;
+import com.cos.shop.service.NiceService;
 import com.cos.shop.service.ProductService;
 
 @Controller 
@@ -31,6 +34,12 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService pservice;
+	
+	@Autowired
+	private NiceService nservice;
+	
+	@Autowired
+	private HateService hservice;
 	
 	@GetMapping({"/","","/index"})
 	public String index() {
@@ -79,8 +88,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/product")
-	public String product(Model model) {
-		
+	public String product(Model model) {		
+	
 		List<Product> products = pservice.findAllProduct();
 		
 		model.addAttribute("products", products);		
@@ -92,9 +101,19 @@ public class ProductController {
 	@GetMapping("/product/productdetail/{productId}")
 	public String productDetail(@PathVariable int productId, Model model) {
 		
+		int userId = 1;
+		
 		Product product = pservice.findByIdProduct(productId);
 		
-		model.addAttribute("product", product);		
+		model.addAttribute("product", product);
+		
+		int niceResult = nservice.findByUserIdProductId(userId, productId);			
+		
+		model.addAttribute("niceResult", niceResult);
+		
+		int hateResult = hservice.findByUserIdProductId(userId, productId);
+		
+		model.addAttribute("hateResult", hateResult);
 		
 		return "product/productdetail";
 	}

@@ -1,6 +1,8 @@
-package com.cos.shop.model.product.dto;
+package com.cos.shop.model.hate.dto;
 
 import com.cos.shop.model.RespCM;
+import com.cos.shop.model.hate.Hate;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RespNiceCount {
-	
+public class RespHateDto {
+
+	private Hate hate; 
 	private RespCM respCM;
-	private int niceCount;
 }
