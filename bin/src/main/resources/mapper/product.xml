@@ -11,22 +11,34 @@
   <select id="findById" resultType="com.cos.shop.model.product.Product">
     select * from product where id = #{id}
   </select> 
-    <select id="findByIdAddCart" resultType="com.cos.shop.model.product.dto.RespAddCart">
+  
+   <select id="findByIdAddCart" resultType="com.cos.shop.model.product.dto.RespAddCart">
     select * from product where id = #{id}
   </select> 
   
-  <insert id="save">
-  	insert into board(title, content, createDate)
-  	values(#{title}, #{content}, now())
-  </insert>
+  <select id="findByIdNiceCount" resultType="com.cos.shop.model.product.dto.RespNiceCount">
+    select niceCount from product where id = #{productId}
+  </select>
   
-  <update id="update">
-  	update board set title=#{title}, content=#{content}
-	where id = #{id}
+  <select id="findByIdHateCount" resultType="com.cos.shop.model.product.dto.RespHateCount">
+    select hateCount from product where id = #{productId}
+  </select>
+  
+  <update id="updateNiceCount" >
+	update product set niceCount = niceCount+1 where id = #{productId}
   </update>
   
-  <delete id="delete">
-  	delete from board where id = #{id}
-  </delete>
+  <update id="updateNiceMinusCount" >
+	update product set niceCount = niceCount-1 where id = #{productId}
+  </update>
   
+  <update id="updateHateCount" >
+	update product set hateCount = hateCount+1 where id = #{productId}
+  </update>
+  
+  <update id="updateHateMinusCount" >
+	update product set hateCount = hateCount-1 where id = #{productId}
+  </update>
+  
+
 </mapper>

@@ -5,10 +5,10 @@
 <mapper namespace="com.cos.shop.repository.BillRepository">
 
 	<select id="findAllUserIdBill" resultType="com.cos.shop.model.bill.dto.FindAllUserIdBillDto">
-		select p.imageOne, p.productName, p.productPrice, b.subCount, b.subPrice, b.createDate
+		select p.imageOne, p.productName, p.productPrice, b.paymentId, b.subCount, b.subPrice, b.createDate
 		from bill b
 		inner join product p on b.productId = p.id	
-		where b.userId = 1
+		where b.userId = #{userId}
 	</select>
 
 	<insert id="bill">

@@ -109,7 +109,7 @@ public class ProductService {
 		return bills;
 	}
 
-public List<Payment> FindAllUserIdPayment(int userId){
+	public List<Payment> findAllUserIdPayment(int userId){
 		
 		
 		List<Payment> payments = payRepository.FindAllUserIdPayment(userId);
@@ -117,7 +117,13 @@ public List<Payment> FindAllUserIdPayment(int userId){
 		return payments;
 	}
 	
+	public List<Product> findBykeyword(String keyword){		
 	
+		List<Product> products = pRepository.findByKeyword(keyword);
+	
+		return products;
+		
+	}
 	
 	
 	

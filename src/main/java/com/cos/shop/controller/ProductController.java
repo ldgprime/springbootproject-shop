@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.shop.model.RespCM;
 import com.cos.shop.model.bill.dto.FindAllUserIdBillDto;
-import com.cos.shop.model.nice.dto.RespNiceProductIdDto;
 import com.cos.shop.model.payment.Payment;
 import com.cos.shop.model.product.Product;
 import com.cos.shop.model.product.dto.RespAddCart;
@@ -52,7 +51,7 @@ public class ProductController {
 		
 		List<FindAllUserIdBillDto> bills = pservice.findAllUserIdBill(userId);
 		model.addAttribute("bills", bills);
-		List<Payment> payments = pservice.FindAllUserIdPayment(userId);
+		List<Payment> payments = pservice.findAllUserIdPayment(userId);
 		model.addAttribute("payments", payments);
 		
 		return "product/bill";
@@ -157,7 +156,7 @@ public class ProductController {
 		
 		List<FindAllUserIdBillDto> bills = pservice.findAllUserIdBill(userId);
 		model.addAttribute("bills", bills);
-		List<Payment> payments = pservice.FindAllUserIdPayment(userId);
+		List<Payment> payments = pservice.findAllUserIdPayment(userId);
 		model.addAttribute("payments", payments);
 		
 		
@@ -165,6 +164,15 @@ public class ProductController {
 		
 	}
 
+	@PostMapping("/product/productsearch")
+	public String product(@RequestParam ("keyword") String keyword, Model model) {	
+		
+		List<Product> products = pservice.findBykeyword(keyword);
+		
+		model.addAttribute("products", products);	
+		
+		return "product/product";
+	}
 
 
 }

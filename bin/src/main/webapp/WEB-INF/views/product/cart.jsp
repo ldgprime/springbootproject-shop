@@ -22,7 +22,7 @@
 
 
 <div class="container" style="margin-top: 650px;">	
-<form action="/product/billProc" method="POST">
+<form action="/product/cartProc" method="POST">
 	
 	<table class="table table-hover">
 		<thead>

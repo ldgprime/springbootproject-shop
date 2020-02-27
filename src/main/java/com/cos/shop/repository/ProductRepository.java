@@ -29,6 +29,8 @@ public interface ProductRepository {
 
 	public RespHateCount findByIdHateCount(ReqHateDto dto);
 	
+	public List<Product> findByKeyword(String keyword);
+	
 
 }
 

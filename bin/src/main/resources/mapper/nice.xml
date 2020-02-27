@@ -3,27 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cos.shop.repository.NiceRepository">
-
-  <select id="findByProductId" resultType="com.cos.shop.model.nice.Nice">
-    select * from board order by productId desc
-  </select>
   
-  <select id="findById" resultType="com.cos.shop.model.nice.Nice">
-    select * from board where id = #{id}
-  </select> 
-  
-  <insert id="save">
-  	insert into board(title, content, createDate)
-  	values(#{title}, #{content}, now())
+  <insert id="nice">
+  	insert into nice(userId, productId)
+  	values(#{userId}, #{productId})
   </insert>
   
-  <update id="update">
-  	update board set title=#{title}, content=#{content}
-	where id = #{id}
-  </update>
-  
-  <delete id="delete">
-  	delete from board where id = #{id}
+  <delete id="niceMinus">
+  	delete from nice where userId = #{userId} and productId = #{productId}   	
   </delete>
+  
+  <select id="findByUserIdProductId" resultType="int">
+  	select count(*) from nice where userId = #{userId} and productId = #{productId}
+  </select>
+
   
 </mapper>

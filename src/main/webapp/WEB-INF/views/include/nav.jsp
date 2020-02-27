@@ -120,14 +120,16 @@
 				<div class="col-md-3 col-xs-4 text-right hidden-xs menu-2">
 					<ul>
 						<li class="search">
+							<form action="/product/productsearch" method="post">
 							<div class="input-group">
-						      <input type="text" placeholder="상품검색">
+						      <input type="text" name="keyword" placeholder="상품검색">
 						      <span class="input-group-btn">
-						        <button class="btn btn-primary" type="button"><i class="icon-search"></i></button>
-						      </span>
+						        <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+						      </span>						      
 						    </div>
-						</li>					
-					</ul>
+						    </form>
+						</li>
+					</ul>					
 				</div>
 			</div>			
 		</div>

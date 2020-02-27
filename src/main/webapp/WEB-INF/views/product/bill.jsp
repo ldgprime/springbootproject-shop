@@ -83,7 +83,7 @@
 		
 		price_fee_sum = 0;		
 		price_fee_sum += Number((total_price[i].innerHTML))+Number((shiping_fee[i].innerHTML));				
-		price_fee.text(price_fee_sum);	
+		price_fee[i].innerText = price_fee_sum;	
 		
 	}
 	
