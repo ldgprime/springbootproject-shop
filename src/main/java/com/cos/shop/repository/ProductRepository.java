@@ -2,6 +2,8 @@ package com.cos.shop.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.cos.shop.model.hate.dto.ReqHateDto;
 import com.cos.shop.model.nice.dto.ReqNiceDto;
 import com.cos.shop.model.product.Product;
@@ -29,8 +31,7 @@ public interface ProductRepository {
 
 	public RespHateCount findByIdHateCount(ReqHateDto dto);
 	
-	public List<Product> findByKeyword(String keyword);
+	public List<Product> findByKeyword(@Param ("keyword") String keyword);	               
 	
-
 }
 

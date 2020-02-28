@@ -1,12 +1,15 @@
 package com.cos.shop.controller;
 
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.shop.model.RespCM;
 import com.cos.shop.model.bill.dto.FindAllUserIdBillDto;
+import com.cos.shop.model.board.Board;
+import com.cos.shop.model.board.dto.RespBoardDto;
 import com.cos.shop.model.payment.Payment;
 import com.cos.shop.model.product.Product;
 import com.cos.shop.model.product.dto.RespAddCart;
+import com.cos.shop.model.user.User;
+import com.cos.shop.service.BoardService;
 import com.cos.shop.service.HateService;
 import com.cos.shop.service.NiceService;
 import com.cos.shop.service.ProductService;
@@ -40,6 +47,13 @@ public class ProductController {
 	@Autowired
 	private HateService hservice;
 	
+	@Autowired
+	private HttpSession session;
+	
+	@Autowired
+	private BoardService bservice;
+	
+	
 	@GetMapping({"/","","/index"})
 	public String index() {
 		return "index";
@@ -47,7 +61,8 @@ public class ProductController {
 
 	@GetMapping("/product/bill")
 	public String bill(Model model) {
-		int userId = 1;
+		User principal = (User) session.getAttribute("principal");
+		int userId = principal.getId();
 		
 		List<FindAllUserIdBillDto> bills = pservice.findAllUserIdBill(userId);
 		model.addAttribute("bills", bills);
@@ -100,7 +115,23 @@ public class ProductController {
 	@GetMapping("/product/productdetail/{productId}")
 	public String productDetail(@PathVariable int productId, Model model) {
 		
-		int userId = 1;
+		User principal = (User) session.getAttribute("principal");
+		if(principal == null) {
+			
+			Product product = pservice.findByIdProduct(productId);
+			
+			model.addAttribute("product", product);	
+			
+			List<RespBoardDto> boards = bservice.findAllProductId(productId);
+			
+			model.addAttribute("boards", boards);
+					
+			return "product/productdetail";
+		
+		}
+		
+		
+		int userId = principal.getId();
 		
 		Product product = pservice.findByIdProduct(productId);
 		
@@ -114,6 +145,10 @@ public class ProductController {
 		
 		model.addAttribute("hateResult", hateResult);
 		
+		List<RespBoardDto> boards = bservice.findAllProductId(productId);
+		
+		model.addAttribute("boards", boards);
+	
 		return "product/productdetail";
 	}
 	
@@ -133,10 +168,27 @@ public class ProductController {
 
 	@PostMapping("/product/cartProc")
 	public String billProc(@RequestParam ("id") int [] id, @RequestParam ("count") int[] count,HttpServletRequest request,HttpServletResponse response,Model model) {
-
-		int userId = 1;
 		
-		pservice.payment(id,count);		
+		User principal = (User) session.getAttribute("principal");
+		if(principal == null) {
+			response.setContentType("text/html; charset=UTF-8");		
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.print("<script>");
+				out.print("alert('로그인이 필요합니다.');");
+				out.print("location.href='/user/login';");			
+				out.print("</script>");
+				out.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}
+		int userId = principal.getId();
+		
+		pservice.payment(id,count,userId);		
 		
 		Cookie[] cookies = request.getCookies();
 		
@@ -167,11 +219,12 @@ public class ProductController {
 	@PostMapping("/product/productsearch")
 	public String product(@RequestParam ("keyword") String keyword, Model model) {	
 		
-		List<Product> products = pservice.findBykeyword(keyword);
-		
-		model.addAttribute("products", products);	
+
+		List<Product> products = pservice.findByKeyword(keyword);		
+		model.addAttribute("products", products);
 		
 		return "product/product";
+		
 	}
 
 

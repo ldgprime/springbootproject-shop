@@ -40,5 +40,8 @@
 	update product set hateCount = hateCount-1 where id = #{productId}
   </update>
   
+  <select id="findByKeyword" resultType="com.cos.shop.model.product.Product">
+  	select * from product where productName like CONCAT('%', #{Keyword}, '%')
+  </select> 
 
 </mapper>

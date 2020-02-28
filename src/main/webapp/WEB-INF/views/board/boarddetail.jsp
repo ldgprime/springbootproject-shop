@@ -6,9 +6,10 @@
 	margin-top: 50px;
 	margin-bottom: 50px;
 ">
-		<h2>글쓰기</h2>
+		<h2>글상세보기</h2>
 		<br />
 		<form action="/action_page.php">
+			<input type="hidden" value="${board.id }">
 			<div class="form-group">
 				<label for="title">글제목:</label>			
 				<input
@@ -17,6 +18,7 @@
 					placeholder="글제목을 입력하세요."
 					id="id"
 					readonly="readonly"
+					value="${board.title }"
 				/>
 			</div>		
 			<div class="form-group">
@@ -25,13 +27,16 @@
 					rows="15"
 					class="form-control"
 					readonly="readonly"				
-				></textarea>
+				>${board.content }</textarea>
 			</div>
-			<a type="#" class="btn btn-danger" style="float: right;">
+			<a href="/board/boarddelete/${board.productId }/${board.id }" class="btn btn-danger" style="float: right;">
 				글삭제
 			</a>
-			<a href="/board/boardupdate" type="submit" class="btn btn-warning" style="float: right;">
+			<a href="/board/boardupdate/${board.id }" type="submit" class="btn btn-warning" style="float: right;">
 				글수정
+			</a>
+			<a href="/product/productdetail/${board.productId }" type="submit" class="btn btn-primary" style="float: right;">
+				상품보기
 			</a>
 		</form>	
 	</div>

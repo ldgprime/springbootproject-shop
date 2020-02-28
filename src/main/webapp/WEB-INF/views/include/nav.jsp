@@ -93,28 +93,22 @@
 					<div id="fh5co-logo"><a href="/">Shop.</a></div>
 				</div>
 				<div class="col-md-6 col-xs-6 text-center menu-1">
-					<ul>
-						<li>
-							<a href="/user/login">로그인</a>				
-						</li>
-						<li>
-							<a href="/user/logout">로그아웃</a>
-						</li>
-						<li>
-							<a href="/user/join">회원가입</a>
-						</li>
-						<li>
-							<a href="/product/product">상품</a>
-						</li>
-						<li>
-							<a href="/product/cart">장바구니</a>					
-						</li>
-						<li>
-							<a href="/product/bill">구매내역</a>
-						</li>
-						<li>
-							<a href="/user/profile">마이페이지</a>
-						</li>
+					<ul>					
+					<c:choose>
+								<c:when test="${not empty principal}">
+									<li><a href="/product/product">상품</a></li>
+									<li><a href="/product/cart">장바구니</a></li>
+									<li><a href="/product/bill">구매내역</a></li>
+									<li><a href="/user/profile/">마이페이지</a></li>
+									<li><a href="/user/logout">로그아웃</a></li>
+								</c:when>
+								<c:otherwise>	
+								    <li><a href="/user/login">로그인</a></li>															
+									<li><a href="/user/join">회원가입</a></li>									
+									<li><a href="/product/product">상품</a></li>
+									<li><a href="/product/cart">장바구니</a></li>	
+								</c:otherwise>
+					</c:choose>				
 					</ul>
 				</div>
 				<div class="col-md-3 col-xs-4 text-right hidden-xs menu-2">

@@ -2,20 +2,20 @@ package com.cos.shop.repository;
 
 import java.util.List;
 
-
-import com.cos.shop.model.board.Board;
-import com.cos.shop.model.user.User;
+import com.cos.shop.model.board.dto.ReqUpdateDto;
+import com.cos.shop.model.board.dto.ReqWriteDto;
+import com.cos.shop.model.board.dto.RespBoardDto;
 
 public interface BoardRepository {
-	// 전체보기
-	List<Board> findByProductId();
-	// 상세보기
-	User findById(int id);
-	// 회원가입
-	int save();
-	// 회원수정
-	void update(Board board);
-	// 회원삭제
-	void delete(int id);
+
+	public int boardWriteProc(ReqWriteDto dto);
+	
+	public List<RespBoardDto> findAllProductId(int productId);
+	
+	public RespBoardDto findById(int boardId);
+	
+	public int updateProc(ReqUpdateDto dto);
+	
+	public int delete(int boardId);
 }
 

@@ -20,9 +20,8 @@ public class User {
 	private Date createDate;
 	
 	@Builder
-	public User(int id, String username, String password, String email, String phone, String address) {
-	
-		this.id = id;
+	public User(String username, String password, String email, String phone, String address) {	
+		
 		this.username = username;
 		this.password = password;
 		this.email = email;

@@ -57,14 +57,13 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public void payment(int[] id, int[] count){
+	public void payment(int[] id, int[] count, int userId){
 		
 		List<Product> products = new ArrayList<Product>();
 		List<Integer> subPriceSum = new ArrayList<Integer>(); 
 		int subPrice = 0;
 		int totalPrice = 0;
-		int totalCount = 0;
-		int userId = 1;
+		int totalCount = 0;		
 		for(int i=0; i<id.length; i++) {
 			Product product = pRepository.findById(id[i]);
 			products.add(product);
@@ -117,12 +116,9 @@ public class ProductService {
 		return payments;
 	}
 	
-	public List<Product> findBykeyword(String keyword){		
-	
-		List<Product> products = pRepository.findByKeyword(keyword);
-	
-		return products;
-		
+	public List<Product> findByKeyword(String keyword){			
+		List<Product> products = pRepository.findByKeyword(keyword);	
+		return products;		
 	}
 	
 	

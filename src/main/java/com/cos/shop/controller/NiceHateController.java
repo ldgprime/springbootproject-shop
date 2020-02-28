@@ -30,7 +30,7 @@ public class NiceHateController {
 	
 	@PostMapping("/nicehate/api/nice")
 	public ResponseEntity<?> nice(@RequestBody ReqNiceDto dto){
-		
+		System.out.println(dto);
 		RespNiceCount respNiceCount = nservice.nice(dto);
 		respNiceCount.setRespCM(new RespCM(200,"ok"));
 		

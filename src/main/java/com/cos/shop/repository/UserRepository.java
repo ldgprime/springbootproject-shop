@@ -1,20 +1,19 @@
 package com.cos.shop.repository;
 
-import java.util.List;
-
-
 import com.cos.shop.model.user.User;
+import com.cos.shop.model.user.dto.ReqJoinDto;
+import com.cos.shop.model.user.dto.ReqLoginDto;
+import com.cos.shop.model.user.dto.ReqprofileDto;
+
 
 public interface UserRepository {
-	// 전체보기
-	List<User> findAll();
-	// 상세보기
-	User findById(int id);
-	// 회원가입
-	int save();
-	// 회원수정
-	void update(User user);
-	// 회원삭제
-	void delete(int id);
-}
+	
+	int save(ReqJoinDto dto);
+	
+	int findByUsername(String username); 
 
+	User findByUsernameAndPassword(ReqLoginDto dto);
+	
+	int updateProfile(ReqprofileDto dto);
+	
+}

@@ -38,10 +38,10 @@
   
   <update id="updateHateMinusCount" >
 	update product set hateCount = hateCount-1 where id = #{productId}
-  </update>
-  
+  </update>   
+       
   <select id="findByKeyword" resultType="com.cos.shop.model.product.Product">
-  	select * from product where productName like CONCAT('%', #{Keyword}, '%')
+  	select * from product where productName LIKE concat('%',#{keyword},'%');                                  
   </select> 
 
 </mapper>
