@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cos.shop.repository.ProductRepository">
+
+  <select id="findAll" resultType="com.cos.shop.model.product.Product">
+    select * from product 
+  </select>
+
+  <select id="findById" resultType="com.cos.shop.model.product.Product">
+    select * from product where id = #{id}
+  </select> 
+  
+   <select id="findByIdAddCart" resultType="com.cos.shop.model.product.dto.RespAddCart">
+    select * from product where id = #{id}
+  </select> 
+  
+  <select id="findByIdNiceCount" resultType="com.cos.shop.model.product.dto.RespNiceCount">
+    select niceCount from product where id = #{productId}
+  </select>
+  
+  <select id="findByIdHateCount" resultType="com.cos.shop.model.product.dto.RespHateCount">
+    select hateCount from product where id = #{productId}
+  </select>
+  
+  <update id="updateNiceCount" >
+	update product set niceCount = niceCount+1 where id = #{productId}
+  </update>
+  
+  <update id="updateNiceMinusCount" >
+	update product set niceCount = niceCount-1 where id = #{productId}
+  </update>
+  
+  <update id="updateHateCount" >
+	update product set hateCount = hateCount+1 where id = #{productId}
+  </update>
+  
+  <update id="updateHateMinusCount" >
+	update product set hateCount = hateCount-1 where id = #{productId}
+  </update>   
+       
+  <select id="findByKeyword" resultType="com.cos.shop.model.product.Product">
+  	select * from product where productName LIKE concat('%',#{keyword},'%');                                  
+  </select> 
+
+</mapper>

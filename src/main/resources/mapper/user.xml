@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cos.shop.repository.UserRepository">
+
+	<select id="findByUsername" resultType="int">
+		select count(*) from user
+		where username = #{username}
+	</select>
+	
+	<insert id="save">
+		insert into user(username, password, email, phone, address)
+		values(#{username}, #{password}, #{email}, #{phone}, #{address})
+	</insert>
+	
+	<select id="findByUsernameAndPassword" resultType="com.cos.shop.model.user.User">
+		select id, username, email, phone, address from user 
+		where username = #{username} and password = #{password}
+	</select>
+	
+	<update id="updateProfile">
+		update user set password=#{password}, email=#{email}, phone=#{phone}, address=#{address}
+		where id = #{id}
+	</update>
+
+
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cos.shop.repository.NiceRepository">
+  
+  <insert id="nice">
+  	insert into nice(userId, productId)
+  	values(#{userId}, #{productId})
+  </insert>
+  
+  <delete id="niceMinus">
+  	delete from nice where userId = #{userId} and productId = #{productId}   	
+  </delete>
+  
+  <select id="findByUserIdProductId" resultType="int">
+  	select count(*) from nice where userId = #{userId} and productId = #{productId}
+  </select>
+
+  
+</mapper>
