@@ -8,15 +8,16 @@
 	margin-bottom: 50px;
 ">
 		<h2>글수정</h2>
-		<br />
-		<form action="/action_page.php">
+		<br />			
+			<input type="hidden" id="id" value="${board.id }" >
 			<div class="form-group">
 				<label for="title">글제목:</label>			
 				<input
 					type="text"
 					class="form-control"
 					placeholder="글제목을 입력하세요."
-					id="id"
+					id="title"
+					value="${board.title }"		
 				/>
 			</div>		
 			<div class="form-group">
@@ -24,16 +25,48 @@
 				<textarea
 					rows="15"
 					class="form-control"
-				
-				
-				></textarea>
+					id="content"
+				>${board.content }</textarea>
 			</div>
-			<button type="submit" class="btn btn-primary" style="float: right;">
+			<button id="update--submit" type="button" class="btn btn-primary" style="float: right;">
 				글수정
 			</button>
-		</form>	
+
 	</div>		
 
+<script>
+$('#update--submit').on('click', function(e) {
+	e.preventDefault();
+	var data = {		
+		id : $('#id').val(),		
+		title : $('#title').val(),
+		content : $('#content').val()
+	};
+	console.log(id)
+
+	$.ajax({
+		type : 'PUT',
+		url : '/board/updateproc',
+		data : JSON.stringify(data),
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json'
+	}).done(function(r) {		
+		if(r.statusCode == 200){
+			alert('글 수정완료!');
+			location.href ='/board/boarddetail/'+data.id;
+		}				
+		
+	}).fail(function(r) {		
+		alert('서버 오류');
+		
+	});
+	
+});
+
+
+
+
+</script>
 
 
 

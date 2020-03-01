@@ -10,21 +10,24 @@
 ">
 		<h2>글쓰기</h2>
 		<br />
-		<form action="/action_page.php">
+		<form action="/board/boardwirteproc" method="POST">
+			<input type="hidden" name="userId" value="${sessionScope.principal.id }">
+			<input type="hidden" name="productId" value="${productId }"> 
 			<div class="form-group">
 				<label for="title">글제목:</label>			
 				<input
 					type="text"
 					class="form-control"
 					placeholder="글제목을 입력하세요."
-					id="id"
+					name="title"
 				/>
 			</div>		
 			<div class="form-group">
 				<label for="content">글내용:</label>				
 				<textarea
 					rows="15"
-					class="form-control"				
+					class="form-control"
+					name="content"				
 				></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary" style="float: right;">
@@ -32,8 +35,5 @@
 			</button>
 		</form>	
 	</div>	
-
-
-
 
 <%@include file="../include/footer.jsp"%>

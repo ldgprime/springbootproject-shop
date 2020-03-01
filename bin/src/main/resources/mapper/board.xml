@@ -4,26 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cos.shop.repository.BoardRepository">
 
-  <select id="findByProductId" resultType="com.cos.shop.model.board.Board">
-    select * from board order by productId desc
-  </select>
+	<insert id="boardWriteProc">
+		insert into board (title,content,userId,productId) values(#{title},#{content},#{userId},#{productId})
+	</insert>
+	
+	<select id="findAllProductId" resultType="com.cos.shop.model.board.dto.RespBoardDto">
+		select b.id,b.title,b.content, b.productId,b.createDate,u.username
+		from board b
+		inner join user u
+		on b.userId = u.id
+		where productId = #{productId}	
+		order by id desc
+	</select>
+	
+	<select id="findById" resultType="com.cos.shop.model.board.dto.RespBoardDto">
+		select b.id,b.title,b.content,b.productId, b.createDate,u.username
+		from board b
+		inner join user u
+		on b.userId = u.id
+		where b.id = #{boardId}	
+	</select>
+	
+	<update id="updateProc">
+		update board set title = #{title}, content =#{content}
+		where id = #{id}			
+	</update>
   
-  <select id="findById" resultType="com.cos.shop.model.board.Board">
-    select * from board where id = #{id}
-  </select> 
-  
-  <insert id="save">
-  	insert into board(title, content, createDate)
-  	values(#{title}, #{content}, now())
-  </insert>
-  
-  <update id="update">
-  	update board set title=#{title}, content=#{content}
-	where id = #{id}
-  </update>
-  
-  <delete id="delete">
-  	delete from board where id = #{id}
-  </delete>
+  	<delete id="delete">
+  		delete from board where id =#{boardId}
+  	</delete>
   
 </mapper>

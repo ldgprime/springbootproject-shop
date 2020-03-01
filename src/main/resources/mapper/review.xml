@@ -4,26 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cos.shop.repository.ReviewRepository">
 
-  <select id="findByProductId" resultType="com.cos.shop.model.review.Review">
-    select * from board order by productId desc
-  </select>
   
-  <select id="findById" resultType="com.cos.shop.model.review.Review">
-    select * from board where id = #{id}
-  </select> 
-  
-  <insert id="save">
-  	insert into board(title, content, createDate)
-  	values(#{title}, #{content}, now())
+  <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.cos.shop.model.review.dto.ReqSaveDto">   	
+  	insert into review(title, content, userId, productId)
+  	values(#{title}, #{content}, #{userId},#{productId})
   </insert>
   
-  <update id="update">
-  	update board set title=#{title}, content=#{content}
-	where id = #{id}
-  </update>
+  <select id="findById" resultType="com.cos.shop.model.review.dto.RespReviewDto">
+  	select r.id,r.productId,r.title,u.username,r.createDate from review r
+  	inner join user u
+  	on r.userId = u.id 
+  	where r.id = #{reviewId} 
+  </select>
   
-  <delete id="delete">
-  	delete from board where id = #{id}
-  </delete>
+   
+  <select id="findAll" resultType="com.cos.shop.model.review.dto.RespReviewDto">
+  	select r.id,r.productId,r.title,u.username,r.createDate from review r
+  	inner join user u
+  	on r.userId = u.id   	
+  </select>
+  
   
 </mapper>

@@ -36,7 +36,7 @@ public class BoardController {
 
 	@GetMapping("/board/boardwrite/{productId}")
 	public String boardWrite(@PathVariable int productId,  Model model, HttpServletResponse response ) {
-		System.out.println(productId);
+		
 		User principal = (User) session.getAttribute("principal");
 		if(principal == null) {
 			response.setContentType("text/html; charset=UTF-8");		

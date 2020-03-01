@@ -53,7 +53,9 @@
 					</tr>
 					<tr>
 						<td class="text-center">
+							<input type="hidden" id="userId" value="${sessionScope.principal.id }">
 							<div id="nice${product.id}" style="display: inline-block;">
+							<c:if test="${not empty sessionScope.principal }">  
 								<c:choose> 
 								<c:when test="${niceResult eq 1 }">
 								<a onclick="niceminus(${product.id})" class="icon btn "><i
@@ -64,11 +66,16 @@
 									class="icon-thumbs-up"></i></a> <span>&nbsp;&nbsp;${product.niceCount }</span>
 								</c:otherwise>
 								</c:choose>
+							</c:if>
+							<c:if test="${empty sessionScope.principal }">
+							<a class="icon btn"><i
+									class="icon-heart2"></i></a> <span>&nbsp;&nbsp;${product.niceCount }</span>		
+							</c:if>	
 							</div>
 						</td>
-						<td class="text-center">
-						
+						<td class="text-center">						
 							<div id="hate${product.id}" style="display: inline-block;">
+							<c:if test="${not empty sessionScope.principal }">  
 								<c:choose> 
 								<c:when test="${hateResult eq 1 }">
 								<a onclick="hateminus(${product.id})" class="icon btn"><i
@@ -79,6 +86,11 @@
 									class="icon-thumbs-down"></i></a><span>&nbsp;&nbsp;${product.hateCount }</span>
 								</c:otherwise>
 							</c:choose>
+								</c:if>
+								<c:if test="${empty sessionScope.principal }">
+								<a  class="icon btn"><i
+									class="icon-heart"></i></a><span>&nbsp;&nbsp;${product.hateCount }</span>	
+							</c:if>	
 							</div>						
 						</td>
 					</tr>
@@ -182,27 +194,17 @@
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach var="board" items="${boards }">
 				<tr>
-					<td>3</td>
-					<td><a href="/board/boarddetail">주말에 배송이 되나요?</a></td>
-					<td>ssar3</td>
-					<td>2020-02-18</td>
+					<td>${board.id }</td>
+					<td><a href="/board/boarddetail/${board.id }">${board.title }</a></td>
+					<td>${board.username }</td>
+					<td>${board.createDate }</td>
 				</tr>
-				<tr>
-					<td>2</td>
-					<td>품절... 재입고 되나요?</td>
-					<td>ssar2</td>
-					<td>2020-02-18</td>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>무상 A/S기간이 어떻게 되나요?</td>
-					<td>ssar1</td>
-					<td>2020-02-18</td>
-				</tr>
+			</c:forEach>				
 			</tbody>
 		</table>
-		<a href="/board/boarddetail" class="btn btn-primary"
+		<a href="/board/boardwrite/${product.id }" class="btn btn-primary"
 			style="float: right;">상품문의하기</a>
 	</div>
 </section>
@@ -213,9 +215,7 @@
 
 
 <script>
-
-		console.log(${niceResult})
-		console.log(${hateResult})
+	
 	
 		$('#review').on('click',function(){
 			let str = "";
@@ -258,9 +258,10 @@
 
 		function niceminus(productId){
 			let data = {			
-				userId:1,
+				userId:$('#userId').val(),
 				productId:productId				
-			}			
+			}
+			console.log(data)			
 			let niceId = 'nice'+productId;
 			
 			$.ajax({
@@ -292,7 +293,7 @@
 
 		function hateminus(productId){
 			let data = {			
-				userId:1,
+				userId:$('#userId').val(),
 				productId:productId				
 			}			
 			let hateId = 'hate'+productId;
@@ -328,7 +329,7 @@
 		
 		function nice(productId){
 			let data = {			
-				userId:1,
+				userId:$('#userId').val(),
 				productId:productId				
 			}			
 			let niceId = 'nice'+productId;
@@ -362,7 +363,7 @@
 
 		function hate(productId){
 			let data = {			
-				userId:1,
+				userId:$('#userId').val(),
 				productId:productId				
 			}			
 			let hateId = 'hate'+productId;
