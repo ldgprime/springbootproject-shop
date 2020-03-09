@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cos.shop.model.PageMaker;
 import com.cos.shop.model.RespCM;
 import com.cos.shop.model.bill.dto.FindAllUserIdBillDto;
 import com.cos.shop.model.board.Board;
@@ -33,6 +34,7 @@ import com.cos.shop.service.BoardService;
 import com.cos.shop.service.HateService;
 import com.cos.shop.service.NiceService;
 import com.cos.shop.service.ProductService;
+import com.cos.shop.service.ReviewService;
 
 @Controller 
 public class ProductController {
@@ -48,10 +50,13 @@ public class ProductController {
 	private HateService hservice;
 	
 	@Autowired
-	private HttpSession session;
+	private ReviewService rservice;
 	
 	@Autowired
 	private BoardService bservice;
+	
+	@Autowired
+	private HttpSession session;
 	
 	
 	@GetMapping({"/","","/index"})
@@ -125,6 +130,12 @@ public class ProductController {
 			List<RespBoardDto> boards = bservice.findAllProductId(productId);
 			
 			model.addAttribute("boards", boards);
+			
+			PageMaker pageMaker = new PageMaker();
+			
+			pageMaker.setTotalCount(rservice.setTotalCount(productId));
+			
+			model.addAttribute("pageMaker", pageMaker);
 					
 			return "product/productdetail";
 		

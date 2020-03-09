@@ -53,7 +53,9 @@
 					</tr>
 					<tr>
 						<td class="text-center">
+							<!-- input hidden -->
 							<input type="hidden" id="userId" value="${sessionScope.principal.id }">
+							<input type="hidden" id="productId" value="${product.id }">
 							<div id="nice${product.id}" style="display: inline-block;">
 							<c:if test="${not empty sessionScope.principal }">  
 								<c:choose> 
@@ -127,8 +129,8 @@
 	</div>
 </section>
 
-<!-- comment section -->
-<section id="comment">
+<!-- review section -->
+<section id="review">
 	<div class="container">
 		<br />
 		<br />
@@ -144,31 +146,15 @@
 					<th>아이디</th>
 					<th>작성일</th>
 				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>3</td>
-					<td>이 상품 좋아요!</td>
-					<td>ssar3</td>
-					<td>2020-02-18</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>이 상품 싫어요!</td>
-					<td>ssar2</td>
-					<td>2020-02-18</td>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>이 상품 좋아요!</td>
-					<td>ssar1</td>
-					<td>2020-02-18</td>
-				</tr>
-			</tbody>
+			</thead>			
+			<tbody id="review--list--box">			
+				
+			</tbody>		
 		</table>
-		<button id="review" class="btn btn-primary" style="float: right;">후기작성하기</button>
+	
+		<button id="review--save" class="btn btn-primary" style="float: right;">후기작성하기</button>
 		<br />
-		<div id="reviewbox"></div>
+		<div id="review--save--box"></div>
 		<br />
 
 	</div>
@@ -215,24 +201,98 @@
 
 
 <script>
+
+		function getreview  (){
+			$.ajax({
+				type : 'GET',
+				url : '/review/api/getreview'
+				
+			}).done(function(r) {	
+				console.log(r)	
+				
+					for(let i=0; i<r.length; i++){			
+					let str = "";
+					str += "<tr>";
+					str += "<td>"+r[i].id+"</td>";
+					str += "<td><a href='#' id='review"+r[i].id+"'>"+r[i].title+"</td>";
+					str += "<td>"+r[i].username+"</td>";
+					str += "<td>"+r[i].createDate+"</td>";
+					str += "</tr>";				
+								
+					$('#review--list--box').prepend(str);
+					}					
+				
+			}).fail(function(r) {		
+				alert('구매후기 로딩 실패했습니다.')
+			
+			})	
+			
+		}
+		
+		getreview();
 	
-	
-		$('#review').on('click',function(){
+		$('#review--save').on('click',function(){
 			let str = "";
 			str += "<div class='form-group'>";			
 			str += "<div class='card-body'>";
 			str += "<label>제목: </label><br/>";
-			str += "<input type='text' class='form-control' style='height: 35px; width: 500px;'>";
+			str += "<input id='review--title' type='text' class='form-control' style='height: 35px; width: 500px;'>";
 			str += "<label>내용: </label><br/>";
-			str += "<textarea id='content' rows='4' class='form-control'>내용</textarea>";
+			str += "<textarea id='review--content' rows='4' class='form-control'>내용</textarea>";
 			str += "</div><br/>";
 			str += "<div class='card-footer'>";
-			str += "<button id='comment--save--submit' type='button' class='btn btn-primary' style='float: right;''>등록</button>";
+			str += "<button id='review--save--submit' type='button' class='btn btn-primary' style='float: right;''>등록</button>";
 			str += "</div></div>";
 
-			$('#reviewbox').prepend(str);	
+			$('#review--save--box').prepend(str);	
 
 		});
+
+		$(document).on('click','#review--save--submit',function(){
+
+			let data = {
+				title:$('#review--title').val(),
+				content:$('#review--content').val(),	
+				userId:$('#userId').val(),
+				productId:$('#productId').val()
+			}
+			
+
+			$.ajax({
+				type : 'POST',
+				url : '/review/api/save',
+				data:JSON.stringify(data),
+				contentType:'application/json; chartset=utf-8',
+				dataType : 'json'
+			}).done(function(r) {				
+				if (r.respCM.statusCode == 200) {				
+					
+							
+						let str = "";
+						str += "<tr>";
+						str += "<td>"+r.id+"</td>";
+						str += "<td><a href='#' id='review"+r.id+"'>"+r.title+"</td>";
+						str += "<td>"+r.username+"</td>";
+						str += "<td>"+r.createDate+"</td>";
+						str += "</tr>";				
+									
+						$('#review--list--box').prepend(str);
+										
+					
+				} else {		
+					alert('실패')
+				}
+			}).fail(function(r) {		
+			
+			
+			})	
+
+		})
+			
+	
+
+
+		
 		
 		$('#addCart').on('click',function(){	
 

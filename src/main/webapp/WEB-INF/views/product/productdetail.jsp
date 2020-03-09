@@ -114,7 +114,7 @@
 		<div class="fh5co-tabs">
 			<ul class="fh5co-tab-nav">
 				<li><a href="#detail">상세보기</a></li>
-				<li><a href="#comment">상품후기</a></li>
+				<li><a href="#review">상품후기</a></li>
 				<li><a href="#board">상품문의</a></li>
 			</ul>
 		</div>
@@ -148,8 +148,43 @@
 				</tr>
 			</thead>			
 			<tbody id="review--list--box">			
+			
+			
 				
-			</tbody>		
+			</tbody>
+			
+			
+			<tr>
+			<td id="pagenate" colspan="5" align="center">
+			<input type="hidden" id="page1" value="${pageMaker.page }"/>		
+			<input type="hidden" id="perPageNum" value="${pageMaker.perPageNum }">
+				<c:choose>
+					<c:when test="${pageMaker.prev }">
+						<a href="${pageMaker.startPage-1 }">이전</a>
+					</c:when>
+					<c:otherwise>
+ 						 이전
+					</c:otherwise>
+				</c:choose> 
+				<c:forEach begin="${pageMaker.startPage }" end="${ pageMaker.endPage}" var="i">
+					<c:choose>
+						<c:when test="${pageMaker.page == i }">
+							${i }
+						</c:when>
+						<c:otherwise>
+							<a class="btn" style="padding-top: 1px; padding-bottom: 1px;padding-left: 1px; padding-right: 1px;" onclick="getreview2(${i })">${i }</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach> 
+				<c:choose>
+					<c:when test="${pageMaker.next }">
+						<a href="${pageMaker.endPage+1 }">다음</a>
+					</c:when>
+					<c:otherwise>
+  						다음
+					</c:otherwise>
+				</c:choose></td>
+		</tr>		
 		</table>
 	
 		<button id="review--save" class="btn btn-primary" style="float: right;">후기작성하기</button>
@@ -201,20 +236,25 @@
 
 
 <script>
-
-		function getreview  (){
+		var productId = $('#productId').val()
+		var page = $('#page1').val()		
+		var perPageNum = $('#perPageNum').val()		
+		
+		function getreview(){
 			$.ajax({
 				type : 'GET',
-				url : '/review/api/getreview'
+				url : '/review/api/getreview/'+ productId+'/'+page
 				
-			}).done(function(r) {	
-				console.log(r)	
+			}).done(function(r) {
 				
-					for(let i=0; i<r.length; i++){			
+				
+					for(let i=0; i<r.length; i++){				
+									
 					let str = "";
-					str += "<tr>";
+					str += "<tr class='review--title--box' id='review--title--box"+r[i].id+"'>";
 					str += "<td>"+r[i].id+"</td>";
-					str += "<td><a href='#' id='review"+r[i].id+"'>"+r[i].title+"</td>";
+					str += "<td><a  class='btn' style='padding-top: 1px; padding-bottom: 1px;' onclick='getcontent("+r[i].id+"); this.onclick=null;'>"+r[i].title+"</td>";
+					
 					str += "<td>"+r[i].username+"</td>";
 					str += "<td>"+r[i].createDate+"</td>";
 					str += "</tr>";				
@@ -230,10 +270,68 @@
 		}
 		
 		getreview();
+
+		function getreview2(page){
+			$.ajax({
+				type : 'GET',
+				url : '/review/api/getreview/'+ productId+'/'+page
+				
+			}).done(function(r) {
+				$('.review--title--box').remove();
+				
+					for(let i=0; i<r.length; i++){			
+					let str = "";
+					str += "<tr id='review--title--box"+r[i].id+"'>";
+					str += "<td>"+r[i].id+"</td>";
+					str += "<td><a  class='btn' style='padding-top: 1px; padding-bottom: 1px;' onclick='getcontent("+r[i].id+"); this.onclick=null;'>"+r[i].title+"</td>";
+					
+					str += "<td>"+r[i].username+"</td>";
+					str += "<td>"+r[i].createDate+"</td>";
+					str += "</tr>";				
+								
+					$('#review--list--box').prepend(str);
+					}					
+				
+			}).fail(function(r) {		
+				alert('구매후기 로딩 실패했습니다.')
+			
+			})	
+			
+		}
+
+		function getcontent(reviewId){
+			$.ajax({
+				type : 'GET',
+				url : '/review/api/getcontent/'+reviewId
+				
+			}).done(function(r) {				
+				
+					let str = "";
+					str += "<tr >";
+					str += "<td colspan='4' class='text-center'>"+r.content+"</td>";					
+					str += "</tr>";				
+
+					let str1 = "review--title--box"+reviewId;		
+					$('#'+str1).after(str);
+									
+				
+			}).fail(function(r) {		
+				alert('구매후기 로딩 실패했습니다.')
+			
+			})
+
+
+		} 
+
+
+		
 	
-		$('#review--save').on('click',function(){
+		$('#review--save').on('click',function(event){
+			
+			if($('#review--title').val()==null){
+			
 			let str = "";
-			str += "<div class='form-group'>";			
+			str += "<div id='review--save--container'>";			
 			str += "<div class='card-body'>";
 			str += "<label>제목: </label><br/>";
 			str += "<input id='review--title' type='text' class='form-control' style='height: 35px; width: 500px;'>";
@@ -245,6 +343,9 @@
 			str += "</div></div>";
 
 			$('#review--save--box').prepend(str);	
+			}else{
+				return;
+			}
 
 		});
 
@@ -265,19 +366,19 @@
 				contentType:'application/json; chartset=utf-8',
 				dataType : 'json'
 			}).done(function(r) {				
-				if (r.respCM.statusCode == 200) {				
+				if (r.respCM.statusCode == 200) {
 					
-							
 						let str = "";
 						str += "<tr>";
 						str += "<td>"+r.id+"</td>";
 						str += "<td><a href='#' id='review"+r.id+"'>"+r.title+"</td>";
 						str += "<td>"+r.username+"</td>";
 						str += "<td>"+r.createDate+"</td>";
-						str += "</tr>";				
+						str += "</tr>";	
+									
 									
 						$('#review--list--box').prepend(str);
-										
+						$('#review--save--container').remove();			
 					
 				} else {		
 					alert('실패')
@@ -288,7 +389,10 @@
 			})	
 
 		})
-			
+		
+		
+		
+		
 	
 
 

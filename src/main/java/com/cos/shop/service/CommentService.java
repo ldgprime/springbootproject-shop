@@ -29,8 +29,6 @@ public class CommentService {
 	
 	public RespDetailDto 댓글쓰기(ReqDetailDto dto) {
 		int result = commentRepository.save(dto);
-
-		System.out.println("CommentService id : "+dto.getId());
 		
 		if(result == 1) { // 댓글쓰기 성공
 			//  select
@@ -40,6 +38,16 @@ public class CommentService {
 		}
 	}
 	
+	public List<RespDetailDto> getComment(){
+		
+		List<RespDetailDto> comments = commentRepository.findAll();
+		
+		return comments;
+		
+		
+	}
+	
+	
 	public int 댓글삭제(int id) {
 		
 		// 해당 댓글은 누가 썻냐?
@@ -47,7 +55,7 @@ public class CommentService {
 		
 		// 지금 로그인 주체는 누구냐?
 		User principal = (User) session.getAttribute("principal");
-		System.out.println(principal);
+
 //		User principal = userDetailService.getPrincipal();
 		if(comment.getUserId() == principal.getId()) {
 			return commentRepository.delete(id); // 1, 0, -1

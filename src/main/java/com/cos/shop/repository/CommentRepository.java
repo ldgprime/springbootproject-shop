@@ -10,5 +10,6 @@ public interface CommentRepository {
 	public RespDetailDto findById(int id);
 	public int delete(int id);
 	public List<RespDetailDto> findByBoardId(int boardId);
+	public List<RespDetailDto> findAll();
 }
 

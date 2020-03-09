@@ -17,11 +17,23 @@
   	where r.id = #{reviewId} 
   </select>
   
-   
+   <select id="findContentById" resultType="com.cos.shop.model.review.dto.RespReviewContentDto">
+  	select content 
+  	from review
+  	where id = #{reviewId} 
+   </select>
+     
   <select id="findAll" resultType="com.cos.shop.model.review.dto.RespReviewDto">
   	select r.id,r.productId,r.title,u.username,r.createDate from review r
   	inner join user u
-  	on r.userId = u.id   	
+  	on r.userId = u.id
+  	where productId = #{productId} 
+  	order by r.id desc limit #{page}, 10  	
+  </select>
+  
+  <select id="setTotalCount"  resultType="int">
+  	select count(*) from review where productId = #{productId} order by id desc
+  
   </select>
   
   
