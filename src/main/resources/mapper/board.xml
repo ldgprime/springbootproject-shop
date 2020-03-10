@@ -14,7 +14,14 @@
 		inner join user u
 		on b.userId = u.id
 		where productId = #{productId}	
-		order by id desc
+		order by b.id desc
+		limit #{page}, 10
+	</select>
+	
+	<select id="setTotalCount" resultType="int">
+		select count(*)
+		from board
+		where productId = #{productId}
 	</select>
 	
 	<select id="findById" resultType="com.cos.shop.model.board.dto.RespBoardDto">

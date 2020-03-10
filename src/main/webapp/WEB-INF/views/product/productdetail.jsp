@@ -53,47 +53,52 @@
 					</tr>
 					<tr>
 						<td class="text-center">
-							<!-- input hidden -->
-							<input type="hidden" id="userId" value="${sessionScope.principal.id }">
-							<input type="hidden" id="productId" value="${product.id }">
+							<!-- input hidden --> <input type="hidden" id="userId"
+							value="${sessionScope.principal.id }"> <input
+							type="hidden" id="productId" value="${product.id }">
+
 							<div id="nice${product.id}" style="display: inline-block;">
-							<c:if test="${not empty sessionScope.principal }">  
-								<c:choose> 
-								<c:when test="${niceResult eq 1 }">
-								<a onclick="niceminus(${product.id})" class="icon btn "><i
-									class="icon-heart2"></i></a> <span>&nbsp;&nbsp;${product.niceCount }</span>
-								</c:when>
-								<c:otherwise>
-								<a onclick="nice(${product.id})" class="icon btn "><i
-									class="icon-thumbs-up"></i></a> <span>&nbsp;&nbsp;${product.niceCount }</span>
-								</c:otherwise>
-								</c:choose>
-							</c:if>
-							<c:if test="${empty sessionScope.principal }">
-							<a class="icon btn"><i
-									class="icon-heart2"></i></a> <span>&nbsp;&nbsp;${product.niceCount }</span>		
-							</c:if>	
-							</div>
-						</td>
-						<td class="text-center">						
-							<div id="hate${product.id}" style="display: inline-block;">
-							<c:if test="${not empty sessionScope.principal }">  
-								<c:choose> 
-								<c:when test="${hateResult eq 1 }">
-								<a onclick="hateminus(${product.id})" class="icon btn"><i
-									class="icon-heart"></i></a><span>&nbsp;&nbsp;${product.hateCount }</span>								
-								</c:when>
-								<c:otherwise>
-								<a onclick="hate(${product.id})" class="icon btn"><i
-									class="icon-thumbs-down"></i></a><span>&nbsp;&nbsp;${product.hateCount }</span>
-								</c:otherwise>
-							</c:choose>
+								<c:if test="${not empty sessionScope.principal }">
+									<c:choose>
+										<c:when test="${niceResult eq 1 }">
+											<a onclick="niceminus(${product.id})" class="icon btn "><i
+												class="icon-heart2"></i></a>
+											<span>&nbsp;&nbsp;${product.niceCount }</span>
+										</c:when>
+										<c:otherwise>
+											<a onclick="nice(${product.id})" class="icon btn "><i
+												class="icon-thumbs-up"></i></a>
+											<span>&nbsp;&nbsp;${product.niceCount }</span>
+										</c:otherwise>
+									</c:choose>
 								</c:if>
 								<c:if test="${empty sessionScope.principal }">
-								<a  class="icon btn"><i
-									class="icon-heart"></i></a><span>&nbsp;&nbsp;${product.hateCount }</span>	
-							</c:if>	
-							</div>						
+									<a class="icon btn"><i class="icon-heart2"></i></a>
+									<span>&nbsp;&nbsp;${product.niceCount }</span>
+								</c:if>
+							</div>
+						</td>
+						<td class="text-center">
+							<div id="hate${product.id}" style="display: inline-block;">
+								<c:if test="${not empty sessionScope.principal }">
+									<c:choose>
+										<c:when test="${hateResult eq 1 }">
+											<a onclick="hateminus(${product.id})" class="icon btn"><i
+												class="icon-heart"></i></a>
+											<span>&nbsp;&nbsp;${product.hateCount }</span>
+										</c:when>
+										<c:otherwise>
+											<a onclick="hate(${product.id})" class="icon btn"><i
+												class="icon-thumbs-down"></i></a>
+											<span>&nbsp;&nbsp;${product.hateCount }</span>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+								<c:if test="${empty sessionScope.principal }">
+									<a class="icon btn"><i class="icon-heart"></i></a>
+									<span>&nbsp;&nbsp;${product.hateCount }</span>
+								</c:if>
+							</div>
 						</td>
 					</tr>
 				</tbody>
@@ -132,11 +137,9 @@
 <!-- review section -->
 <section id="review">
 	<div class="container">
-		<br />
-		<br />
+		<br /> <br />
 		<h2>상품후기</h2>
-		<br />
-		<br />
+		<br /> <br />
 
 		<table class="table table-hover">
 			<thead>
@@ -146,48 +149,17 @@
 					<th>아이디</th>
 					<th>작성일</th>
 				</tr>
-			</thead>			
-			<tbody id="review--list--box">			
-			
-			
-				
+			</thead>
+			<tbody id="review--list--box">
+
 			</tbody>
-			
-			
-			<tr>
-			<td id="pagenate" colspan="5" align="center">
-			<input type="hidden" id="page1" value="${pageMaker.page }"/>		
-			<input type="hidden" id="perPageNum" value="${pageMaker.perPageNum }">
-				<c:choose>
-					<c:when test="${pageMaker.prev }">
-						<a href="${pageMaker.startPage-1 }">이전</a>
-					</c:when>
-					<c:otherwise>
- 						 이전
-					</c:otherwise>
-				</c:choose> 
-				<c:forEach begin="${pageMaker.startPage }" end="${ pageMaker.endPage}" var="i">
-					<c:choose>
-						<c:when test="${pageMaker.page == i }">
-							${i }
-						</c:when>
-						<c:otherwise>
-							<a class="btn" style="padding-top: 1px; padding-bottom: 1px;padding-left: 1px; padding-right: 1px;" onclick="getreview2(${i })">${i }</a>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach> 
-				<c:choose>
-					<c:when test="${pageMaker.next }">
-						<a href="${pageMaker.endPage+1 }">다음</a>
-					</c:when>
-					<c:otherwise>
-  						다음
-					</c:otherwise>
-				</c:choose></td>
-		</tr>		
+			<tr id="pagenate">
+
+			</tr>
 		</table>
-	
-		<button id="review--save" class="btn btn-primary" style="float: right;">후기작성하기</button>
+
+		<button id="review--save" class="btn btn-primary"
+			style="float: right;">후기작성하기</button>
 		<br />
 		<div id="review--save--box"></div>
 		<br />
@@ -199,11 +171,9 @@
 <!-- board section -->
 <section id="board">
 	<div class="container" style="margin-bottom: 120px;">
-		<br />
-		<br />
+		<br /> <br />
 		<h2>상품문의</h2>
-		<br />
-		<br />
+		<br /> <br />
 
 		<table class="table table-hover">
 			<thead>
@@ -214,15 +184,15 @@
 					<th>작성일</th>
 				</tr>
 			</thead>
-			<tbody>
-			<c:forEach var="board" items="${boards }">
-				<tr>
-					<td>${board.id }</td>
-					<td><a href="/board/boarddetail/${board.id }">${board.title }</a></td>
-					<td>${board.username }</td>
-					<td>${board.createDate }</td>
-				</tr>
-			</c:forEach>				
+			<tbody id="board--list--box">
+				<c:forEach var="board" items="${boards }">
+					<tr class="board--title--box" >
+						<td>${board.id }</td>
+						<td><a href="/board/boarddetail/${board.id }">${board.title }</a></td>
+						<td>${board.username }</td>
+						<td>${board.createDate }</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<a href="/board/boardwrite/${product.id }" class="btn btn-primary"
@@ -236,20 +206,17 @@
 
 
 <script>
-		var productId = $('#productId').val()
-		var page = $('#page1').val()		
-		var perPageNum = $('#perPageNum').val()		
-		
-		function getreview(){
+var productId = $('#productId').val()		
+
+		function getreview2(page){
 			$.ajax({
 				type : 'GET',
-				url : '/review/api/getreview/'+ productId+'/'+page
+				url : '/review/api/getreview/'+productId+'/'+page
 				
 			}).done(function(r) {
+				$('.review--title--box').remove();
 				
-				
-					for(let i=0; i<r.length; i++){				
-									
+					for(let i=0; i<r.length; i++){			
 					let str = "";
 					str += "<tr class='review--title--box' id='review--title--box"+r[i].id+"'>";
 					str += "<td>"+r[i].id+"</td>";
@@ -259,38 +226,41 @@
 					str += "<td>"+r[i].createDate+"</td>";
 					str += "</tr>";				
 								
-					$('#review--list--box').prepend(str);
-					}					
-				
-			}).fail(function(r) {		
-				alert('구매후기 로딩 실패했습니다.')
-			
-			})	
-			
-		}
-		
-		getreview();
+					$('#review--list--box').append(str);
 
-		function getreview2(page){
-			$.ajax({
-				type : 'GET',
-				url : '/review/api/getreview/'+ productId+'/'+page
-				
-			}).done(function(r) {
-				$('.review--title--box').remove();
-				
-					for(let i=0; i<r.length; i++){			
-					let str = "";
-					str += "<tr id='review--title--box"+r[i].id+"'>";
-					str += "<td>"+r[i].id+"</td>";
-					str += "<td><a  class='btn' style='padding-top: 1px; padding-bottom: 1px;' onclick='getcontent("+r[i].id+"); this.onclick=null;'>"+r[i].title+"</td>";
+					}
+
+				$('#pagenate').empty();
+				$('.review--content').remove();
 					
-					str += "<td>"+r[i].username+"</td>";
-					str += "<td>"+r[i].createDate+"</td>";
-					str += "</tr>";				
-								
-					$('#review--list--box').prepend(str);
-					}					
+				let str2="";
+
+				
+				str2 +="<td colspan='4' align='center'>";
+				str2 +="<input type='hidden' id='page1' value='"+r[0].reviewPageMaker.page+"'/>";
+				str2 +="<input type='hidden' id='perPageNum' value='"+r[0].reviewPageMaker.perPageNum+"'>";
+				if(r[0].reviewPageMaker.prev){
+					str2 += "<a class='btn' onclick='getreview2("+(r[0].reviewPageMaker.startPage-1)+")'>이전</a>";
+				}else{			
+					str2 += "이전 ";
+				}
+				for(let i = r[0].reviewPageMaker.startPage; i<= r[0].reviewPageMaker.endPage; i++){
+					if(r[0].reviewPageMaker.page == i){
+						str2 += " "+i+" ";	
+					}else{
+						str2 +="<a class='btn' style='padding-top: 1px; padding-bottom: 1px;padding-left: 1px; padding-right: 1px;' onclick='getreview2("+i+")'>"+i+"</a>";
+					}
+				}
+				
+				if(r[0].reviewPageMaker.next){
+					str2 += "<a class='btn' onclick='getreview2("+(r[0].reviewPageMaker.endPage+1)+")'>다음</a>";
+				}else{
+					str2 +="다음";	
+				}
+				str2 +="</td>";
+
+				$('#pagenate').append(str2);				
+									
 				
 			}).fail(function(r) {		
 				alert('구매후기 로딩 실패했습니다.')
@@ -298,6 +268,8 @@
 			})	
 			
 		}
+
+		getreview2(1);
 
 		function getcontent(reviewId){
 			$.ajax({
@@ -307,7 +279,7 @@
 			}).done(function(r) {				
 				
 					let str = "";
-					str += "<tr >";
+					str += "<tr class='review--content' >";
 					str += "<td colspan='4' class='text-center'>"+r.content+"</td>";					
 					str += "</tr>";				
 
@@ -321,10 +293,7 @@
 			})
 
 
-		} 
-
-
-		
+		} 		
 	
 		$('#review--save').on('click',function(event){
 			
@@ -390,6 +359,36 @@
 
 		})
 		
+		function getboard(page){
+			$.ajax({
+				type : 'GET',
+				url : '/board/api/getboard/'+productId+'/'+page
+				
+			}).done(function(r) {
+				$('.board--title--box').remove();
+				
+					for(let i=0; i<r.length; i++){			
+					let str = "";
+					str += "<tr class='board--title--box' id='board--title--box"+r[i].id+"'>";
+					str += "<td>"+r[i].id+"</td>";
+					str += "<td><a href='/board/boarddetail/"+r[i].id+"'>"+r[i].title+"</a></td>";
+					       				
+					str += "<td>"+r[i].username+"</td>";
+					str += "<td>"+r[i].createDate+"</td>";
+					str += "</tr>";				
+								
+					$('#board--list--box').append(str);
+					}
+			}).fail(function(r) {		
+					alert('상품문의 로딩 실패했습니다.')					
+			})	
+
+
+		}
+
+		getboard(1)	
+		
+		
 		
 		
 		
@@ -424,8 +423,7 @@
 			let data = {			
 				userId:$('#userId').val(),
 				productId:productId				
-			}
-			console.log(data)			
+			}					
 			let niceId = 'nice'+productId;
 			
 			$.ajax({

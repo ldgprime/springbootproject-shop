@@ -2,6 +2,7 @@ package com.cos.shop.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.cos.shop.model.PageMaker;
 import com.cos.shop.model.RespCM;
 import com.cos.shop.model.board.dto.ReqUpdateDto;
 import com.cos.shop.model.board.dto.ReqWriteDto;
@@ -114,5 +116,18 @@ public class BoardController {
 		
 		return "redirect:/product/productdetail/"+productId+"";
 	}
+	
+	@GetMapping("/board/api/getboard/{productId}/{page}")
+	public ResponseEntity<?> getboard(@PathVariable int productId, @PathVariable int page){
+		
+		List<RespBoardDto> boards = bservice.findAllProductId(productId,page);
+		PageMaker boardPageMaker = new PageMaker();
+		boardPageMaker.setPage(page);
+		boardPageMaker.setTotalCount(bservice.setTotalCount(productId));
+		boards.get(0).setBoardPageMaker(boardPageMaker);
+		
+		return new ResponseEntity<List<RespBoardDto>> (boards,HttpStatus.OK);
+	}
+	
 	
 }

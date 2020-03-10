@@ -2,6 +2,8 @@ package com.cos.shop.model.board.dto;
 
 import java.sql.Date;
 
+import com.cos.shop.model.PageMaker;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RespBoardDto {
+	
+	private PageMaker boardPageMaker;
+	
 	
 	private int id;
 	private String title;

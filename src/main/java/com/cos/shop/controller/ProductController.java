@@ -127,15 +127,9 @@ public class ProductController {
 			
 			model.addAttribute("product", product);	
 			
-			List<RespBoardDto> boards = bservice.findAllProductId(productId);
+			//List<RespBoardDto> boards = bservice.findAllProductId(productId);
 			
-			model.addAttribute("boards", boards);
-			
-			PageMaker pageMaker = new PageMaker();
-			
-			pageMaker.setTotalCount(rservice.setTotalCount(productId));
-			
-			model.addAttribute("pageMaker", pageMaker);
+			//model.addAttribute("boards", boards);		
 					
 			return "product/productdetail";
 		
@@ -156,9 +150,9 @@ public class ProductController {
 		
 		model.addAttribute("hateResult", hateResult);
 		
-		List<RespBoardDto> boards = bservice.findAllProductId(productId);
+		//List<RespBoardDto> boards = bservice.findAllProductId(productId);
 		
-		model.addAttribute("boards", boards);
+		//model.addAttribute("boards", boards);
 	
 		return "product/productdetail";
 	}

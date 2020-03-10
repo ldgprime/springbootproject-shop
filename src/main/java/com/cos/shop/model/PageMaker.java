@@ -27,6 +27,8 @@ public class PageMaker {
 	
 	private void calcData() {
 		//					소수점이하 올림		23
+		//startPage = (int) Math.ceil((page-1)/(double)displayPageNum*displayPageNum)+1;
+		//endPage = startPage + displayPageNum -1; 
 		endPage = (int)(Math.ceil(page/(double)displayPageNum)*displayPageNum);
 		startPage = (endPage-displayPageNum)+1;
 		int totalEndPage = (int)(Math.ceil(totalCount)/(double)perPageNum);
@@ -82,7 +84,14 @@ public class PageMaker {
 		this.perPageNum = perPageNum;
 	}
 
+	@Override
+	public String toString() {
+		return "PageMaker [totalCount=" + totalCount + ", startPage=" + startPage + ", endPage=" + endPage + ", prev="
+				+ prev + ", next=" + next + ", page=" + page + ", perPageNum=" + perPageNum + ", displayPageNum="
+				+ displayPageNum + "]";
+	}
 
+	
 
 	
 }

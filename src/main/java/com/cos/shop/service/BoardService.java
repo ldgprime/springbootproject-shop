@@ -23,11 +23,16 @@ public class BoardService {
 		return result;
 	}
 	
-	public List<RespBoardDto> findAllProductId(int productId){
+	public List<RespBoardDto> findAllProductId(int productId, int page){
 		
-		List<RespBoardDto> boards = brepository.findAllProductId(productId);
+		page = page-1;
+		List<RespBoardDto> boards = brepository.findAllProductId(productId, page);
 				
 		return boards;
+	}
+	
+	public int setTotalCount(int productId) {
+		return brepository.setTotalCount(productId);
 	}
 	
 	public RespBoardDto findById(int boardId) {
