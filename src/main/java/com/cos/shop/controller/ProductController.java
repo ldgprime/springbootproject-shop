@@ -125,11 +125,8 @@ public class ProductController {
 			
 			Product product = pservice.findByIdProduct(productId);
 			
-			model.addAttribute("product", product);	
+			model.addAttribute("product", product);				
 			
-			//List<RespBoardDto> boards = bservice.findAllProductId(productId);
-			
-			//model.addAttribute("boards", boards);		
 					
 			return "product/productdetail";
 		
@@ -148,11 +145,8 @@ public class ProductController {
 		
 		int hateResult = hservice.findByUserIdProductId(userId, productId);
 		
-		model.addAttribute("hateResult", hateResult);
-		
-		//List<RespBoardDto> boards = bservice.findAllProductId(productId);
-		
-		//model.addAttribute("boards", boards);
+		model.addAttribute("hateResult", hateResult);		
+	
 	
 		return "product/productdetail";
 	}

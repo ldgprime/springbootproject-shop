@@ -185,15 +185,11 @@
 				</tr>
 			</thead>
 			<tbody id="board--list--box">
-				<c:forEach var="board" items="${boards }">
-					<tr class="board--title--box" >
-						<td>${board.id }</td>
-						<td><a href="/board/boarddetail/${board.id }">${board.title }</a></td>
-						<td>${board.username }</td>
-						<td>${board.createDate }</td>
-					</tr>
-				</c:forEach>
+				
 			</tbody>
+			<tr id="board--pagenate">
+
+			</tr>
 		</table>
 		<a href="/board/boardwrite/${product.id }" class="btn btn-primary"
 			style="float: right;">상품문의하기</a>
@@ -263,7 +259,7 @@ var productId = $('#productId').val()
 									
 				
 			}).fail(function(r) {		
-				alert('구매후기 로딩 실패했습니다.')
+				console.log(r)
 			
 			})	
 			
@@ -271,6 +267,34 @@ var productId = $('#productId').val()
 
 		getreview2(1);
 
+
+		//수정필요함
+		$(document).one('click','#getcontent2', function(){
+			let reviewId = $('#getcontent2Id').val()		
+			console.log(reviewId)
+				
+			$.ajax({
+				type : 'GET',
+				url : '/review/api/getcontent/'+reviewId
+				
+			}).done(function(r) {				
+				
+					let str = "";
+					str += "<tr class='review--content' >";
+					str += "<td colspan='4' class='text-center'>"+r.content+"</td>";					
+					str += "</tr>";				
+
+					let str1 = "review--title--box"+reviewId;		
+					$('#'+str1).after(str);
+									
+				
+			}).fail(function(r) {		
+				alert('구매후기 내용 불러오기 실패했습니다.')
+			
+			})
+		})
+		
+				
 		function getcontent(reviewId){
 			$.ajax({
 				type : 'GET',
@@ -288,7 +312,7 @@ var productId = $('#productId').val()
 									
 				
 			}).fail(function(r) {		
-				alert('구매후기 로딩 실패했습니다.')
+				alert('구매후기 내용 불러오기 실패했습니다.')
 			
 			})
 
@@ -338,9 +362,11 @@ var productId = $('#productId').val()
 				if (r.respCM.statusCode == 200) {
 					
 						let str = "";
-						str += "<tr>";
-						str += "<td>"+r.id+"</td>";
-						str += "<td><a href='#' id='review"+r.id+"'>"+r.title+"</td>";
+						str += "<tr class='review--title--box' id='review--title--box"+r.id+"'>";
+						str += "<td>"+r.id+"</td>";                                                
+						str += "<td><a  class='btn' style='padding-top: 1px; padding-bottom: 1px;' value='"+r.id+"' id='getcontent2'>"+r.title+"</td>";
+						str += "<input type='hidden' value='"+r.id+"' id='getcontent2Id'/>";
+						
 						str += "<td>"+r.username+"</td>";
 						str += "<td>"+r.createDate+"</td>";
 						str += "</tr>";	
@@ -379,8 +405,39 @@ var productId = $('#productId').val()
 								
 					$('#board--list--box').append(str);
 					}
+
+				$('#board--pagenate').empty();
+
+				let str2="";
+
+				
+				str2 +="<td colspan='4' align='center'>";
+				str2 +="<input type='hidden' id='board--page' value='"+r[0].boardPageMaker.page+"'/>";
+				str2 +="<input type='hidden' id='board--perPageNum' value='"+r[0].boardPageMaker.perPageNum+"'>";
+				if(r[0].boardPageMaker.prev){
+					str2 += "<a class='btn' onclick='getboard("+(r[0].boardPageMaker.startPage-1)+")'>이전</a>";
+				}else{			
+					str2 += "이전 ";
+				}
+				for(let i = r[0].boardPageMaker.startPage; i<= r[0].boardPageMaker.endPage; i++){
+					if(r[0].boardPageMaker.page == i){
+						str2 += " "+i+" ";	
+					}else{
+						str2 +="<a class='btn' style='padding-top: 1px; padding-bottom: 1px;padding-left: 1px; padding-right: 1px;' onclick='getboard("+i+")'>"+i+"</a>";
+					}
+				}
+				
+				if(r[0].boardPageMaker.next){
+					str2 += "<a class='btn' onclick='getboard("+(r[0].boardPageMaker.endPage+1)+")'>다음</a>";
+				}else{
+					str2 +="다음";	
+				}
+				str2 +="</td>";
+
+				$('#board--pagenate').append(str2);		
+				
 			}).fail(function(r) {		
-					alert('상품문의 로딩 실패했습니다.')					
+					console.log(r)					
 			})	
 
 

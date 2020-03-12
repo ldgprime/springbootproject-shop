@@ -42,7 +42,7 @@ $('#update--submit').on('click', function(e) {
 		title : $('#title').val(),
 		content : $('#content').val()
 	};
-	console.log(id)
+	
 
 	$.ajax({
 		type : 'PUT',

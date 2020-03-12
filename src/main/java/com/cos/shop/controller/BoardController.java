@@ -29,105 +29,101 @@ import com.cos.shop.service.BoardService;
 
 @Controller
 public class BoardController {
-	
+
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
 	private BoardService bservice;
 
 	@GetMapping("/board/boardwrite/{productId}")
-	public String boardWrite(@PathVariable int productId,  Model model, HttpServletResponse response ) {
-		
+	public String boardWrite(@PathVariable int productId, Model model, HttpServletResponse response) {
+
 		User principal = (User) session.getAttribute("principal");
-		if(principal == null) {
-			response.setContentType("text/html; charset=UTF-8");		
+		if (principal == null) {
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out;
 			try {
 				out = response.getWriter();
 				out.print("<script>");
 				out.print("alert('로그인이 필요합니다.');");
-				out.print("location.href='/user/login';");			
+				out.print("location.href='/user/login';");
 				out.print("</script>");
 				out.flush();
 			} catch (IOException e) {
-				
+
 				e.printStackTrace();
 			}
-		
+
 		}
-		
+
 		model.addAttribute("productId", productId);
-		
+
 		return "board/boardwrite";
 	}
-	
+
 	@PostMapping("/board/boardwirteproc")
 	public String boardWriteProc(ReqWriteDto dto) {
-		
-		int result = bservice.boardWriteProc(dto); 
-		
-		if(result == 1) {
-		return "redirect:/product/productdetail/"+dto.getProductId()+"";
+
+		int result = bservice.boardWriteProc(dto);
+
+		if (result == 1) {
+			return "redirect:/product/productdetail/" + dto.getProductId() + "";
 		}
-		
+
 		return "product/product";
 	}
-	
-	
+
 	@GetMapping("/board/boardupdate/{boardId}")
 	public String boardupdate(@PathVariable int boardId, Model model) {
-		
-		RespBoardDto board = bservice.findById(boardId);
-		model.addAttribute("board", board);		
-		
-		return "board/boardupdate";
-		
-	}
 
-	
-	@GetMapping("/board/boarddetail/{boardId}")
-	public String boardDetail(@PathVariable int boardId, Model model) {
-		
 		RespBoardDto board = bservice.findById(boardId);
 		model.addAttribute("board", board);
-		
+
+		return "board/boardupdate";
+
+	}
+
+	@GetMapping("/board/boarddetail/{boardId}")
+	public String boardDetail(@PathVariable int boardId, Model model) {
+
+		RespBoardDto board = bservice.findById(boardId);
+		model.addAttribute("board", board);
+
 		return "board/boarddetail";
 	}
 
 	@PutMapping("/board/updateproc")
 	public ResponseEntity<?> updateProc(@RequestBody ReqUpdateDto dto) {
-		
+
 		int result = bservice.updateProc(dto);
 
-		if(result == 1 ) {
-			return new ResponseEntity<RespCM> (new RespCM(200,"ok"),HttpStatus.OK);
-		}else {
-			return new ResponseEntity<RespCM> (new RespCM(500,"ok"),HttpStatus.BAD_REQUEST);
+		if (result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<RespCM>(new RespCM(500, "ok"), HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
-	
+
 	@GetMapping("/board/boarddelete/{productId}/{boardId}")
 	public String boardDelete(@PathVariable int productId, @PathVariable int boardId) {
-		
-		bservice.delete(boardId); 
-		
-		
-		return "redirect:/product/productdetail/"+productId+"";
+
+		bservice.delete(boardId);
+
+		return "redirect:/product/productdetail/" + productId + "";
 	}
-	
+
 	@GetMapping("/board/api/getboard/{productId}/{page}")
-	public ResponseEntity<?> getboard(@PathVariable int productId, @PathVariable int page){
-		
-		List<RespBoardDto> boards = bservice.findAllProductId(productId,page);
+	public ResponseEntity<?> getboard(@PathVariable int productId, @PathVariable int page) {
+
+		List<RespBoardDto> boards = bservice.findAllProductId(productId, page);
 		PageMaker boardPageMaker = new PageMaker();
 		boardPageMaker.setPage(page);
 		boardPageMaker.setTotalCount(bservice.setTotalCount(productId));
 		boards.get(0).setBoardPageMaker(boardPageMaker);
-		
-		return new ResponseEntity<List<RespBoardDto>> (boards,HttpStatus.OK);
+
+		return new ResponseEntity<List<RespBoardDto>>(boards, HttpStatus.OK);
 	}
-	
-	
+
 }

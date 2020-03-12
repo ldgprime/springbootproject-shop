@@ -77,7 +77,7 @@ function getComment(){
 		url : '/comment/api/getcomment/'+${board.id}
 		
 	}).done(function(r) {
-			console.log(r)
+			
 			for(let i=0; i<r.length; i++){			
 				var comment_item = "<li id='comment--item--"+r[i].id+"' class='list-group-item d-flex justify-content-between align-items-center'>";
 				comment_item += "<div class='font-italic'>"+r[i].content+"</div>";
@@ -89,7 +89,7 @@ function getComment(){
 			}					
 		
 	}).fail(function(r) {		
-		alert('댓글목록 불러오기 실패했습니다.')
+		console.log(r)
 	
 	})	
 	
